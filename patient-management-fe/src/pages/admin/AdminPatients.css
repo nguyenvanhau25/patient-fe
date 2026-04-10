@@ -1,0 +1,42 @@
+
+.patients-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.id-tag {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.action-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-table-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F1F5F9;
+  border-radius: 6px;
+  color: var(--text-muted);
+}
+
+.btn-table-icon:hover {
+  background-color: var(--primary-light);
+  color: white;
+  transform: scale(1.1);
+}
+
+.btn-table-icon.danger:hover {
+  background-color: var(--danger);
+  color: white;
+}

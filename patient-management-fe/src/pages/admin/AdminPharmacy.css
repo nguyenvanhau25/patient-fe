@@ -1,0 +1,192 @@
+
+.medicine-management-card {
+  overflow: hidden;
+}
+
+.stat-card-mini {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.stat-card-mini:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.stat-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card-mini.blue .stat-icon-wrapper { background-color: #EFF6FF; color: #2563EB; }
+.stat-card-mini.amber .stat-icon-wrapper { background-color: #FFFBEB; color: #D97706; }
+.stat-card-mini.emerald .stat-icon-wrapper { background-color: #ECFDF5; color: #059669; }
+.stat-card-mini.indigo .stat-icon-wrapper { background-color: #EEF2FF; color: #4F46E5; }
+
+.stat-info-mini {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label-mini {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.stat-value-mini {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+.medicine-profile-cell {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.medicine-image-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+}
+
+.medicine-img {
+  width: 100%;
+  height: 100%;
+  object-cover: cover;
+  transition: var(--transition);
+}
+
+.medicine-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.image-edit-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+
+.medicine-image-wrapper:hover .image-edit-overlay {
+  opacity: 1;
+}
+
+.medicine-image-wrapper:hover .medicine-img {
+  transform: scale(1.1);
+}
+
+.medicine-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.medicine-name {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
+.medicine-code {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.medicine-details-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.manufacturer {
+  font-weight: 600;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.category {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.inventory-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.status-pill {
+  width: fit-content;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-success { background-color: #DCFCE7; color: #15803D; }
+.status-warning { background-color: #FEF3C7; color: #B45309; }
+.status-danger { background-color: #FEE2E2; color: #B91C1C; }
+
+.quantity-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.price-text {
+  font-weight: 800;
+  color: var(--info);
+  font-size: 1.1rem;
+}
+
+.action-btns {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.btn-icon-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.btn-icon-sm:hover {
+  background-color: var(--background);
+  color: var(--primary);
+  border-color: var(--info);
+}

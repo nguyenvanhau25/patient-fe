@@ -1,0 +1,736 @@
+/* HOME PAGE — Clean design matching hau_anh_hospital_homepage.html */
+
+.home-page {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ─── HERO ─────────────────────────────────── */
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  padding: clamp(2rem, 4vw, 4rem) clamp(1.5rem, 3vw, 2.5rem);
+  align-items: center;
+  background: var(--color-background, white);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  background: #f0f9ff;
+  color: #0284c7;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  border: 0.5px solid #bae6fd;
+}
+
+.hero-left h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
+}
+
+.hero-accent {
+  color: #0ea5e9;
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: #374151;
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  border: 0.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 6px 6px 6px 1rem;
+  max-width: 440px;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.search-bar:hover {
+  border-color: #0ea5e9;
+}
+
+.search-icon-inner {
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: #64748b;
+  outline: none;
+}
+
+.search-bar button {
+  background: #0ea5e9;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 1rem;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.hero-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.h-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.h-stat b {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary, #0f172a);
+}
+
+.h-stat span {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.h-stat-divider {
+  width: 0.5px;
+  height: 32px;
+  background: #e2e8f0;
+}
+
+/* Doctor Card Visual */
+.hero-right {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.doctor-card-main {
+  background: white;
+  border: 0.5px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 1.5rem;
+  width: 280px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+.doctor-avatar-box {
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.doctor-avatar-box svg {
+  width: 80px;
+  height: 80px;
+  opacity: 0.6;
+}
+
+.online-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #059669;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.online-dot {
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+}
+
+.dc-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: #0f172a;
+  margin-bottom: 3px;
+}
+
+.dc-spec {
+  font-size: 12px;
+  color: #0284c7;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.dc-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #f59e0b;
+  font-size: 13px;
+}
+
+.dc-stars span {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+/* Floating Cards */
+.float-card {
+  position: absolute;
+  background: white;
+  border: 0.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.float-1 {
+  top: 0;
+  right: -20px;
+}
+
+.float-2 {
+  bottom: 30px;
+  left: -30px;
+}
+
+.float-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fi-blue {
+  background: #eff6ff;
+}
+
+.fi-green {
+  background: #f0fdf4;
+}
+
+.float-label {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.float-val {
+  font-size: 13px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+/* ─── STATS BAND ─────────────────────────────── */
+.stats-band {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 0.5px solid #e5e7eb;
+  border-radius: 16px;
+  margin: 0 2.5rem 3rem;
+  overflow: hidden;
+}
+
+.stat-box {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stat-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-box b {
+  font-size: 1.35rem;
+  font-weight: 600;
+  display: block;
+  color: #0f172a;
+}
+
+.stat-box p {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* ─── SECTIONS ───────────────────────────────── */
+.home-section {
+  padding: 3rem 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.bg-soft-clean {
+  background: #f8fafc;
+  max-width: 100%;
+  padding: 3rem 0;
+}
+
+.bg-soft-clean .section-head,
+.bg-soft-clean .doctors-row {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.section-sub {
+  font-size: 14px;
+  color: #374151;
+  margin-top: 4px;
+}
+
+.btn-link {
+  font-size: 13px;
+  color: #0ea5e9;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+/* ─── SPEC GRID ───────────────────────────────── */
+.spec-grid-clean {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.spec-card-clean {
+  background: white;
+  border: 0.5px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.spec-card-clean:hover {
+  border-color: #0ea5e9;
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.08);
+}
+
+.spec-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.spec-card-clean h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 3px;
+}
+
+.spec-card-clean p {
+  font-size: 13px;
+  color: #374151;
+}
+
+.spec-count {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 100px;
+}
+
+/* ─── DOCTORS ROW ─────────────────────────────── */
+.doctors-row {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+}
+
+.doctors-row::-webkit-scrollbar {
+  display: none;
+}
+
+.doc-card-clean {
+  min-width: 200px;
+  background: white;
+  border: 0.5px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.25rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+
+.doc-card-clean:hover {
+  border-color: #0ea5e9;
+}
+
+.doc-ava {
+  width: 100%;
+  height: 120px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: white;
+}
+
+.doc-spec-tag {
+  font-size: 11px;
+  color: #0284c7;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.doc-name-clean {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.doc-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #92400e;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.doc-rating-row span {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.doc-pts {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 0.75rem;
+}
+
+.doc-book-btn {
+  width: 100%;
+  padding: 8px;
+  background: #f8fafc;
+  border: 0.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #0f172a;
+  transition: all 0.2s;
+}
+
+.doc-card-clean:hover .doc-book-btn {
+  background: #0ea5e9;
+  color: white;
+  border-color: #0ea5e9;
+}
+
+.doc-more {
+  min-width: 150px;
+  border-style: dashed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #64748b;
+  font-size: 13px;
+  text-align: center;
+}
+
+.more-circle {
+  width: 40px;
+  height: 40px;
+  background: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #64748b;
+}
+
+/* ─── NEWS ───────────────────────────────────── */
+.news-grid-clean {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.news-card-clean {
+  background: white;
+  border: 0.5px solid #e5e7eb;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.news-card-clean:hover {
+  border-color: #0ea5e9;
+}
+
+.news-img-placeholder {
+  height: 190px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.news-img-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.news-card-clean:hover .news-img-placeholder img {
+  transform: scale(1.05);
+}
+
+.news-tag-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: white;
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.news-body-clean {
+  padding: 1.25rem;
+}
+
+.news-date-clean {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.news-title-clean {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #0f172a;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.news-excerpt-clean {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.news-more-btn {
+  font-size: 12px;
+  color: #0ea5e9;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ─── CTA BANNER ─────────────────────────────── */
+.cta-banner {
+  margin: 0 2.5rem 3rem;
+  background: #0ea5e9;
+  border-radius: 20px;
+  padding: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cta-banner h2 {
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.cta-banner p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.cta-book-btn {
+  background: white;
+  color: #0284c7;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 1.75rem;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s;
+  white-space: nowrap;
+}
+
+.cta-book-btn:hover {
+  transform: translateY(-2px);
+}
+
+.bg-soft-clean-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 2.5rem;
+}
+
+/* Hover animation transition helpers */
+.spec-card-clean,
+.doc-card-clean,
+.news-card-clean,
+.result-doc-card {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Animate spin utility */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1024px) {
+  .spec-grid-clean {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .news-grid-clean {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-band {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    padding: 2rem 1.25rem;
+  }
+
+  .hero-right {
+    display: none;
+  }
+
+  .hero-left h1 {
+    font-size: 2rem;
+  }
+
+  .stats-band {
+    margin: 0 1.25rem 2rem;
+  }
+
+  .home-section {
+    padding: 2rem 1.25rem;
+  }
+
+  .cta-banner {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    margin: 0 1.25rem 2rem;
+  }
+
+  .spec-grid-clean {
+    grid-template-columns: 1fr;
+  }
+}

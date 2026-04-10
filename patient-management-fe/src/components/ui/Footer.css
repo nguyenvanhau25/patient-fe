@@ -1,0 +1,198 @@
+
+/* Footer — Dark navy premium, matching hospital branding */
+
+.site-footer {
+  background: #1e293b;
+  color: #94a3b8;
+  margin-top: 0;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+  gap: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+/* Brand col */
+.footer-brand-col {}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.footer-logo-icon {
+  width: 32px;
+  height: 32px;
+  background: #0ea5e9;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.footer-logo-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+}
+
+.footer-logo-name span {
+  color: #38bdf8;
+}
+
+.footer-brand-desc {
+  font-size: 13px;
+  color: #94a3b8;
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+  max-width: 280px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 8px;
+}
+
+.footer-social-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.footer-social-btn:hover {
+  background: #0ea5e9;
+  color: white;
+}
+
+/* Links col */
+.footer-links-col h4,
+.footer-contact-col h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.footer-links-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-links-col a {
+  font-size: 13px;
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links-col a:hover {
+  color: #38bdf8;
+}
+
+/* Contact col */
+.footer-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footer-contact-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.fc-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #0ea5e9;
+}
+
+/* Divider + bottom */
+.footer-divider {
+  border-top: 0.5px solid rgba(255,255,255,0.08);
+}
+
+.footer-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.footer-bottom-row p {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.footer-bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-bottom-links a {
+  font-size: 12px;
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-bottom-links a:hover {
+  color: #38bdf8;
+}
+
+.footer-bottom-links span {
+  width: 3px;
+  height: 3px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .footer-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .footer-bottom-row {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+}

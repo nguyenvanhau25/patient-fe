@@ -1,0 +1,163 @@
+
+.health-portal-premium {
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+/* Vitals Dashboard */
+.vitals-dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.vital-stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: var(--transition);
+}
+
+.vital-stat-card:hover { border-color: var(--info); transform: translateY(-3px); box-shadow: var(--shadow); }
+
+.v-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vital-stat-card.blue .v-icon-wrap { background: #eff6ff; color: #2563eb; }
+.vital-stat-card.red .v-icon-wrap { background: #fef2f2; color: #dc2626; }
+.vital-stat-card.orange .v-icon-wrap { background: #fff7ed; color: #ea580c; }
+.vital-stat-card.green .v-icon-wrap { background: #f0fdf4; color: #16a34a; }
+
+.v-data { display: flex; flex-direction: column; }
+.v-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+.v-value { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+.v-value small { font-size: 0.85rem; font-weight: 600; color: #94a3b8; }
+
+/* Tabs Premium Health */
+.health-tabs-premium {
+  display: flex;
+  gap: 0.75rem;
+  background: #f1f5f9;
+  padding: 0.4rem;
+  border-radius: 16px;
+  width: fit-content;
+}
+
+.ph-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.ph-tab.active { background: white; color: var(--info); box-shadow: var(--shadow-sm); }
+
+/* Health Record Card */
+.health-record-p-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 24px;
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--border);
+  transition: var(--transition);
+  align-items: flex-start;
+}
+
+.health-record-p-card:hover { border-color: var(--info); box-shadow: var(--shadow-premium); }
+
+.record-date-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 100px;
+}
+
+.record-date-sidebar .d-icon { color: var(--info); opacity: 0.6; }
+.record-date-sidebar .d-text { font-size: 0.9rem; font-weight: 800; color: var(--primary); }
+
+.record-main-info { flex: 1; }
+.record-header-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+.record-title { font-size: 1.25rem; font-weight: 800; color: var(--primary); }
+.dr-tag { font-size: 0.8rem; font-weight: 700; padding: 0.35rem 0.85rem; background: var(--background); border-radius: 50px; color: var(--text-muted); }
+
+.record-diagnosis { background: #f8fafc; padding: 1rem; border-radius: 16px; border-left: 4px solid var(--info); }
+.record-diagnosis .label { font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 0.25rem; }
+.record-diagnosis .value { font-size: 1rem; font-weight: 700; color: var(--primary); }
+
+.btn-view-results {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--info);
+  background: white;
+  white-space: nowrap;
+}
+
+/* Prescription Card */
+.prescription-p-card {
+  background: white;
+  border-radius: 28px;
+  border: 1px solid var(--border);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.presc-p-header { display: flex; gap: 1.5rem; margin-bottom: 2rem; align-items: center; }
+.p-icon-box { width: 60px; height: 60px; background: #fff7ed; color: #ea580c; border-radius: 18px; display: flex; align-items: center; justify-content: center; }
+.p-header-main { flex: 1; }
+.p-title { font-size: 1.35rem; font-weight: 800; color: var(--primary); }
+.p-meta { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+.p-status-tag { padding: 0.4rem 1rem; background: #dcfce7; color: #15803d; border-radius: 50px; font-weight: 800; font-size: 0.75rem; }
+
+.presc-p-medicines { background: #fdfaf7; border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+.medicine-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.85rem; border-bottom: 1px dashed #e2e8f0; }
+.medicine-row:last-child { border-bottom: none; }
+.med-info { display: flex; flex-direction: column; }
+.med-name { font-weight: 800; color: var(--primary); font-size: 1.05rem; }
+.med-dosage { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+.med-usage { font-weight: 700; color: var(--info); font-size: 0.95rem; }
+
+.presc-p-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.presc-p-footer .advice { max-width: 60%; font-size: 0.85rem; color: var(--text-muted); }
+.btn-p-order { padding: 0.85rem 1.5rem; background: var(--primary); color: white; border-radius: 12px; font-weight: 700; }
+
+.empty-health-state { padding: 5rem 0; text-align: center; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+
+@media (max-width: 1024px) {
+  .vitals-dashboard { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .health-record-p-card { flex-direction: column; }
+  .record-date-sidebar { flex-direction: row; min-width: 100%; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+  .btn-view-results { width: 100%; justify-content: center; }
+  .presc-p-footer { flex-direction: column; gap: 1.5rem; }
+  .presc-p-footer .advice { max-width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .vitals-dashboard { grid-template-columns: 1fr; }
+}
