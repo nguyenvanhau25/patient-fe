@@ -43,6 +43,48 @@ const MOCKS = {
     { appointmentId: 'apt_001', appointmentDate: '2026-06-20', appointmentTime: '08:30', doctorName: 'Nguyễn Minh', chiefComplaint: 'Tái khám định kỳ tim mạch', status: 'CONFIRMED' },
     { appointmentId: 'apt_002', appointmentDate: '2026-05-10', appointmentTime: '15:00', doctorName: 'Lê Thu Lan', chiefComplaint: 'Sốt cao, ho', status: 'COMPLETED' },
   ],
+  // Thêm vào MOCKS, ngay sau 'medical-records/patient'
+  'api/medical-records': [
+    {
+      id: 'mr_001',
+      medicalRecordId: 'mr_001',
+      patientId: 'patient_123',
+      patientName: 'Nguyễn Hậu Anh',
+      visitDate: '2026-05-10',
+      appointmentDate: '2026-05-10',
+      doctorName: 'BS. Lê Thu Lan',
+      doctorId: 'doc_2',
+      diagnosis: 'Sốt xuất huyết, đã điều trị ổn định',
+      symptoms: 'Sốt cao, đau đầu, phát ban',
+      notes: 'Theo dõi tiểu cầu sau 3 ngày',
+    },
+    {
+      id: 'mr_002',
+      medicalRecordId: 'mr_002',
+      patientId: 'patient_123',
+      patientName: 'Nguyễn Hậu Anh',
+      visitDate: '2025-12-20',
+      appointmentDate: '2025-12-20',
+      doctorName: 'BS. Nguyễn Minh',
+      doctorId: 'doc_1',
+      diagnosis: 'Theo dõi hở van tim nhẹ',
+      symptoms: 'Đau tức ngực, khó thở khi gắng sức',
+      notes: 'Tái khám sau 6 tháng, siêu âm tim định kỳ',
+    },
+    {
+      id: 'mr_003',
+      medicalRecordId: 'mr_003',
+      patientId: '7f9e8d7c-6b5a-4e3d-2c1b-0a0b0c0d0e0f',
+      patientName: 'Trần Thị B',
+      visitDate: '2026-04-05',
+      appointmentDate: '2026-04-05',
+      doctorName: 'BS. Phạm Thành',
+      doctorId: 'doc_3',
+      diagnosis: 'Viêm amidan cấp',
+      symptoms: 'Đau họng, sốt nhẹ, khó nuốt',
+      notes: 'Kháng sinh 7 ngày, tái khám nếu không đỡ',
+    },
+  ],
 
   // Patients & Health
   'api/patients': [
@@ -53,6 +95,29 @@ const MOCKS = {
     { medicalRecordId: 'mr_1', patientId: 'patient_123', patientName: 'Nguyễn Hậu Anh', appointmentDate: '2026-05-10', doctorName: 'BS. Lê Thu Lan', chiefComplaint: 'Sốt xuất huyết', diagnosis: 'Dương tính SXH, đã điều trị ổn định' },
     { medicalRecordId: 'mr_2', patientId: 'patient_123', patientName: 'Nguyễn Hậu Anh', appointmentDate: '2025-12-20', doctorName: 'BS. Nguyễn Minh', chiefComplaint: 'Đau tức ngực', diagnosis: 'Theo dõi hở van tim nhẹ' },
   ],
+  'ai-clinical/diagnosis-template': {
+    patientId: 'patient_123',
+    patientName: 'Nguyễn Hậu Anh',
+    doctorId: '1f2e3d4c-5b61-4c32-b1a0-d9e8f7a6b5c4',
+    doctorName: 'BS. Nguyễn Văn A',
+    specialty: 'Nội tổng quát',
+    clinicalSummary: 'Bệnh nhân có biểu hiện sốt, mệt và đau họng trong bối cảnh tiền sử không quá lý.',
+    suggestedDiagnosis: 'Theo dõi nhiễm khuẩn hô hấp trên, cân nhắc phân biệt viêm họng do virus/vi khuẩn.',
+    riskLevel: 'trung_binh',
+    recommendedActions: [
+      'Khám hô hấp và tai mũi họng',
+      'Đánh giá dấu hiệu sinh tồn và SpO2',
+      'Cân nhắc công thức máu hoặc test nhanh nếu có chỉ định',
+    ],
+    redFlags: [
+      'Khó thở hoặc SpO2 giảm',
+      'Sốt cao kéo dài trên 3 ngày',
+      'Đau ngực hoặc lú lẫn',
+    ],
+    disclaimer: 'AI chỉ hỗ trợ bản mẫu, bắt buộc bổ lĩnh bằng thăm khám và chỉ định của bác sĩ.',
+    historicalRecordCount: 2,
+    aiGenerated: true,
+  },
   'prescriptions/patient': [
     { prescriptionId: 'pr_1', dateIssued: '2026-05-10', doctorName: 'Lê Thu Lan', hospital: 'Bệnh viện Hậu Anh', status: 'Đã cấp thuốc', medicines: [{ name: 'Paracetamol', dosage: '500mg', frequency: '2 viên/ngày', duration: '5 ngày' }] },
   ],
@@ -80,6 +145,7 @@ const MOCKS = {
     { id: 'med_3', name: 'Vitamin C 1000mg', manufacturer: 'Domesco', quantity: 0, price: 15000, description: 'Tăng cường đề kháng' },
     { id: 'med_4', name: 'Panadol Extra', manufacturer: 'GSK', quantity: 120, price: 3500, description: 'Giảm đau đầu' },
   ]
+
 };
 
 // Auto-Mock Interceptor
@@ -187,9 +253,12 @@ export const patientApi = {
 
 export const clinicalApi = {
   createRecord: (data) => api.post('/api/medical-records', data),
+  getAllRecords: () => api.get('/api/medical-records'),
   getPatientRecords: (id) => api.get(`/api/medical-records/patient/${id}`),
   getRecordById: (id) => api.get(`/api/medical-records/${id}`),
   updateRecord: (id, data) => api.put(`/api/medical-records/${id}`, data),
+  generateDiagnosisTemplate: (data) => api.post('/api/ai-clinical/diagnosis-template', data),
+  chatWithAI: (data) => api.post('/api/ai-clinical/chat', data),
 };
 
 export const pharmacyApi = {

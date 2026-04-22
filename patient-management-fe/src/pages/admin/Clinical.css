@@ -1,55 +1,96 @@
+/* --- quick actions --- */
+.quick-action-p { display: flex; align-items: center; gap: 1rem; padding: 1.5rem; cursor: pointer; }
+.quick-action-p.blue svg  { color: var(--info); }
+.quick-action-p.emerald svg { color: var(--secondary); }
+.quick-action-p.indigo svg { color: var(--primary); }
 
-.clinical-container {
-  display: flex;
-  flex-direction: column;
+/* Override modal size cho AI modal */
+.modal-wide {
+  width: min(1200px, calc(100vw - 2rem)) !important;
+  max-width: 1200px !important;
 }
 
-.quick-action {
+/* Fix grid 2 cột cho popup siêu rộng */
+.ai-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr; /* Bên kết quả rộng hơn chút xíu để dễ đọc */
+  gap: 2rem; /* Tăng khoảng cách để không bị chèn */
+  align-items: stretch; /* Đảm bảo 2 panel bằng nhau chiều cao */
+  width: 100%;
+}
+
+/* Panel trái và phải */
+.ai-form-panel,
+.ai-result-panel {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.08); /* Viền mềm mỏng hơn */
+  border-radius: 1.25rem; /* Bo góc cong hơn */
+  padding: 1.75rem; /* Rộng rãi hơn */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
   gap: 1rem;
-  padding: 2rem;
-  border: 1px solid var(--border);
-  cursor: pointer;
+  min-width: 0; 
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02); /* Thêm đổ bóng mờ */
+}
+/* Modal overlay phải cho phép scroll */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;       /* đổi từ center → flex-start */
+  justify-content: center;
+  overflow-y: auto;              /* cho phép scroll overlay */
+  padding: 2rem 1rem;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
 }
 
-.quick-action svg {
-  margin-bottom: 0.5rem;
+/* Modal body có thể scroll bên trong */
+.modal-wide {
+  width: min(1200px, calc(100vw - 2rem)) !important;
+  max-width: unset !important;
+  max-height: unset !important;  
 }
 
-.quick-action.pink svg { color: var(--danger); }
-.quick-action.blue svg { color: var(--info); }
-.quick-action.green svg { color: var(--secondary); }
-
-.quick-action:hover {
-  background-color: var(--bg-app);
-  transform: translateY(-5px);
+.modal-wide .modal-body-p {
+  overflow-y: auto;
+  max-height: calc(100vh - 120px); /* trừ header modal */
+  padding: 1.25rem;
 }
+/* --- ai result pieces --- */
+.ai-status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+.ai-status-row h4 { font-size: 1rem; font-weight: 700; margin: 0; }
 
-.code {
-  font-family: monospace;
-  font-weight: 700;
-  color: var(--primary-light);
-  background-color: #EFF6FF;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+.ai-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+.ai-meta-item { padding: 0.7rem 0.9rem; border-radius: 0.75rem; background: var(--bg-app); border: 1px solid var(--border); }
+.ai-meta-item span { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.1rem; }
+.ai-meta-item strong { color: var(--text-main); word-break: break-word; }
+
+.ai-panel { padding: 0.9rem 1rem; border: 1px solid var(--border); border-radius: 0.85rem; background: rgba(255,255,255,0.6); }
+.ai-panel h4 { margin: 0 0 0.5rem; font-size: 0.9rem; font-weight: 700; color: var(--text-main); }
+.ai-panel p  { margin: 0; color: var(--text-muted); line-height: 1.6; }
+
+.ai-list { margin: 0; padding-left: 1.1rem; color: var(--text-main); line-height: 1.65; }
+.ai-list li + li { margin-top: 0.35rem; }
+.ai-list.danger li::marker { color: #dc2626; }
+
+.ai-disclaimer { padding: 0.85rem 1rem; border-radius: 0.85rem; background: rgba(59,130,246,0.08); color: #1d4ed8; font-weight: 600; line-height: 1.55; }
+.ai-error-box  { background: rgba(239,68,68,0.08) !important; color: #b91c1c !important; }
+
+.ai-action-button { width: 100%; justify-content: center; }
+
+/* --- risk badges --- */
+.risk-badge-ai { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.8rem; border-radius: 999px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
+.risk-badge-ai.thap       { background: rgba(34,197,94,0.12);  color: #15803d; }
+.risk-badge-ai.trung_binh { background: rgba(245,158,11,0.14); color: #b45309; }
+.risk-badge-ai.cao        { background: rgba(239,68,68,0.14);  color: #b91c1c; }
+
+/* --- responsive --- */
+@media (max-width: 900px) {
+  .ai-modal-grid { grid-template-columns: 1fr; }
+  .ai-meta { grid-template-columns: 1fr 1fr; }
 }
-
-.diagnosis-tag {
-  font-weight: 600;
-  color: var(--text-main);
-  border-left: 3px solid var(--secondary);
-  padding-left: 0.75rem;
-}
-
-.btn-text-info {
-  color: var(--info);
-  font-weight: 700;
-  font-size: 0.9rem;
-}
-
-.btn-text-info:hover {
-  text-decoration: underline;
+@media (max-width: 480px) {
+  .ai-meta { grid-template-columns: 1fr; }
 }

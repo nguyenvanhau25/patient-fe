@@ -27,8 +27,8 @@ const PortalLayout = () => {
               <Activity size={25} />
               <div className="logo-cross"></div>
             </div>
-            <div className="brand-texts">
-              <span className="brand-name">HẬU ANH</span>
+            <div className="brand-texts" >
+              <span className="brand-name" >HẬU ANH</span>
               <span className="brand-tagline">HEALTHCARE HOSPITAL</span>
             </div>
           </div>

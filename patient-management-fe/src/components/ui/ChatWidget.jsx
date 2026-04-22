@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, X, Send, Bot, User, Minimize2, Maximize2 } from 'lucide-react';
+import { MessageSquare, X, Send, Bot, User, Minimize2, Maximize2, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { clinicalApi } from '../../utils/api';
 import './ChatWidget.css';
 
 const ChatWidget = () => {
@@ -22,15 +23,6 @@ const ChatWidget = () => {
     if (isOpen) scrollToBottom();
   }, [messages, isOpen, isTyping]);
 
-  const getAIResponse = (query) => {
-    const q = query.toLowerCase();
-    if (q.includes('lịch') || q.includes('khám')) return "Bạn có thể đặt lịch khám tại mục 'Lịch hẹn'. Hiện tại chúng tôi còn trống các khung giờ sáng mai với BS. Nguyễn Minh.";
-    if (q.includes('bác sĩ')) return "Chúng tôi có đội ngũ hơn 50 chuyên gia hàng đầu. Bạn muốn tìm bác sĩ chuyên khoa nào (Tim mạch, Nhi, Nội...)?";
-    if (q.includes('giá') || q.includes('phí')) return "Giá khám cơ bản là 300.000 VNĐ. Nếu bạn có bảo hiểm y tế, chi phí sẽ được giảm trừ theo quy định.";
-    if (q.includes('thuốc') || q.includes('dược')) return "Kho dược của chúng tôi luôn sẵn sàng. Bạn có thể tra cứu đơn thuốc trong mục 'Sức khỏe'.";
-    return "Cảm ơn thông tin của bạn. Tôi đã ghi nhận và sẽ chuyển tới bộ phận chuyên trách. Bạn có muốn tôi hỗ trợ gì thêm không?";
-  };
-
   const handleSend = async (e) => {
     e.preventDefault();
     if (!input.trim() || isTyping) return;
@@ -42,23 +34,44 @@ const ChatWidget = () => {
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
-    setMessages(prev => [...prev, userMsg]);
+    const updatedMessages = [...messages, userMsg];
+    setMessages(updatedMessages);
     const currentInput = input;
     setInput('');
     setIsTyping(true);
 
-    // AI Processing Simulation
-    setTimeout(() => {
-      const response = getAIResponse(currentInput);
+    try {
+      const history = updatedMessages
+          .filter(msg => msg.id !== 1 && msg.id !== userMsg.id) // Filter initial and current
+          .map(msg => ({
+             role: msg.sender === 'bot' ? 'assistant' : 'user',
+             content: msg.text
+          }));
+
+      const res = await clinicalApi.chatWithAI({
+         message: currentInput,
+         history: history.slice(-10) // Send the last 10 messages for context
+      });
+
       const botMsg = {
         id: Date.now() + 1,
-        text: response,
+        text: res.data.response,
         sender: 'bot',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, botMsg]);
+    } catch (error) {
+      console.error("Chat error: ", error);
+      const errorMsg = {
+        id: Date.now() + 1,
+        text: "Xin lỗi, hiện tại tôi không thể kết nối tới hệ thống. Vui lòng thử lại sau.",
+        sender: 'bot',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   return (

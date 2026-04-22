@@ -1,243 +1,99 @@
-
-import React, { useState } from 'react';
-import { Search, Filter, MoreVertical, Shield, ShieldAlert, ShieldCheck, UserPlus, Mail, X, Loader2, Check } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { Search, Filter, MoreVertical, Shield, ShieldAlert, ShieldCheck, UserPlus } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { authApi } from '../../utils/api';
 import { useApi } from '../../hooks/useApi';
 import { LoadingState } from '../../components/ui/LoadingState';
 import { EmptyState } from '../../components/ui/EmptyState';
+import { Badge } from '../../components/ui/Badge';
 import './AdminUsers.css';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: 'spring', stiffness: 100 }
-  }
-};
 
 const AdminUsers = () => {
   const { data: usersRaw, loading, error, execute: fetchUsers } = useApi(() => authApi.getAllUsers());
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({ fullName: '', email: '', password: '', role: 'PATIENT' });
-  const [showSuccess, setShowSuccess] = useState(false);
-  
+
   const users = usersRaw || [];
 
-  const handleAddUser = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      await authApi.register(formData);
-      setShowSuccess(true);
-      setTimeout(() => {
-        setShowSuccess(false);
-        setIsModalOpen(false);
-        fetchUsers();
-        setFormData({ fullName: '', email: '', password: '', role: 'PATIENT' });
-      }, 1500);
-    } catch (err) {
-      alert('Lỗi đăng ký người dùng: ' + (err.response?.data?.message || 'Email đã tồn tại'));
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const getRoleIcon = (role) => {
-    if (role?.includes('ADMIN')) return <ShieldAlert size={16} />;
-    if (role?.includes('DOCTOR')) return <ShieldCheck size={16} />;
-    return <Shield size={16} />;
-  };
-
-  const getRoleClass = (role) => {
-    if (role?.includes('ADMIN')) return 'role-admin';
-    if (role?.includes('DOCTOR')) return 'role-doctor';
-    return 'role-user';
+    if (role?.includes('ADMIN')) return <ShieldAlert size={14} />;
+    if (role?.includes('DOCTOR')) return <ShieldCheck size={14} />;
+    return <Shield size={14} />;
   };
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="admin-page-container">
-      <header className="page-header flex-between mb-8">
-        <motion.div variants={itemVariants}>
-          <h1 className="text-gradient">Quản lý Tài khoản</h1>
-          <p className="text-muted">Quản lý bộ máy vận hành và bệnh nhân.</p>
-        </motion.div>
-        <motion.button 
-          variants={itemVariants}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="btn btn-primary"
-          onClick={() => setIsModalOpen(true)}
-        >
-          <UserPlus size={18} /> <span>Thêm Thành viên</span>
-        </motion.button>
-      </header>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="users-container container mt-4">
+      <div className="flex-between m-b-2">
+        <div>
+          <h1>Quản lý Hệ thống & User</h1>
+          <p className="text-muted">Quản lý tài khoản, phân quyền và trạng thái truy cập (Port 4004 Gateway).</p>
+        </div>
+        <button className="btn-primary">
+          <UserPlus size={18} /> <span>Thêm User mới</span>
+        </button>
+      </div>
 
-      {/* Modern Add User Modal */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div className="modal-overlay">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="modal-premium glass"
-            >
-              <div className="modal-header-p">
-                <h3>Thêm người dùng mới</h3>
-                <button className="close-btn" onClick={() => setIsModalOpen(false)}><X size={20} /></button>
-              </div>
-              
-              <div className="modal-body-p">
-                {showSuccess ? (
-                  <div className="success-state-modal">
-                    <div className="success-icon-box"><Check size={40} /></div>
-                    <h4>Đăng ký thành công!</h4>
-                    <p>Thành viên mới đã được thêm vào hệ thống.</p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleAddUser} className="premium-form">
-                    <div className="form-group-p">
-                      <label>Họ và tên</label>
-                      <input 
-                        required 
-                        type="text" 
-                        placeholder="Nguyễn Văn A" 
-                        value={formData.fullName}
-                        onChange={e => setFormData({...formData, fullName: e.target.value})}
-                      />
-                    </div>
-                    <div className="form-group-p">
-                      <label>Email đăng nhập</label>
-                      <input 
-                        required 
-                        type="email" 
-                        placeholder="user@hauanh.com" 
-                        value={formData.email}
-                        onChange={e => setFormData({...formData, email: e.target.value})}
-                      />
-                    </div>
-                    <div className="form-row-p">
-                      <div className="form-group-p flex-1">
-                        <label>Mật khẩu</label>
-                        <input 
-                          required 
-                          type="password" 
-                          placeholder="••••••••" 
-                          value={formData.password}
-                          onChange={e => setFormData({...formData, password: e.target.value})}
-                        />
+      <div className="card glass users-table-container">
+        <div className="table-header-actions p-4">
+          <div className="search-box">
+            <Search size={18} />
+            <input type="text" placeholder="Tìm tên, email hoặc role..." />
+          </div>
+          <button className="btn-secondary">
+            <Filter size={18} /> <span>Bộ lọc</span>
+          </button>
+        </div>
+
+        {loading ? (
+          <div className="p-8"><LoadingState message="Đang tải danh sách người dùng..." /></div>
+        ) : error ? (
+          <div className="p-8"><EmptyState isError title="Lỗi tải người dùng" message={error} onAction={fetchUsers} actionLabel="Thử lại" /></div>
+        ) : users.length === 0 ? (
+          <div className="p-8"><EmptyState title="Trống" message="Chưa có người dùng nào trong hệ thống." /></div>
+        ) : (
+          <div className="table-responsive">
+            <table className="users-table w-full">
+              <thead>
+                <tr>
+                  <th className="px-6 py-4 text-left">Người dùng</th>
+                  <th className="px-6 py-4 text-left">Vai trò</th>
+                  <th className="px-6 py-4 text-left">Trạng thái</th>
+                  <th className="px-6 py-4 text-right"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user.id} className="border-b border-slate-100">
+                    <td className="px-6 py-4">
+                      <div className="user-info-cell flex items-center gap-3">
+                        <div className="user-avatar w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-500">
+                          {user.fullName?.charAt(0) || user.email?.charAt(0)}
+                        </div>
+                        <div>
+                          <div className="name font-bold text-slate-800">{user.fullName || 'N/A'}</div>
+                          <div className="email text-sm text-slate-500">{user.email}</div>
+                        </div>
                       </div>
-                      <div className="form-group-p flex-1">
-                        <label>Chức vụ</label>
-                        <select 
-                          value={formData.role} 
-                          onChange={e => setFormData({...formData, role: e.target.value})}
-                        >
-                          <option value="PATIENT">Bệnh nhân</option>
-                          <option value="DOCTOR">Bác sĩ</option>
-                          <option value="ADMIN">Quản trị viên</option>
-                        </select>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="role-tag flex items-center gap-1.5 px-2 py-1 bg-slate-50 rounded-md text-sm text-slate-600 w-fit">
+                        {getRoleIcon(user.role)}
+                        {user.role}
                       </div>
-                    </div>
-                    <div className="modal-actions-p mt-6">
-                      <button type="button" className="btn-cancel" onClick={() => setIsModalOpen(false)}>Hủy bỏ</button>
-                      <button type="submit" className="btn-submit" disabled={isSubmitting}>
-                        {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : 'Tạo tài khoản'}
-                      </button>
-                    </div>
-                  </form>
-                )}
-              </div>
-            </motion.div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="status-badge active px-2 py-1 rounded-full text-xs bg-emerald-50 text-emerald-600 font-medium">
+                        Hoạt động
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="btn-icon p-2 hover:bg-slate-100 rounded-lg transition-colors"><MoreVertical size={18} /></button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
-      </AnimatePresence>
-
-      <motion.div variants={itemVariants} className="card glass users-management-card">
-        <div className="table-filters flex-between p-6">
-          <div className="search-wrapper">
-            <Search size={18} className="search-icon" />
-            <input type="text" placeholder="Tìm kiếm tên, email..." className="search-input" />
-          </div>
-          <button className="btn btn-secondary"><Filter size={18} /> <span>Lọc</span></button>
-        </div>
-
-        <div className="table-content">
-          {loading ? (
-            <div className="p-12"><LoadingState message="Đang tải danh sách..." /></div>
-          ) : error ? (
-            <div className="p-12"><EmptyState isError title="Lỗi tải dữ liệu" message={error} onAction={fetchUsers} actionLabel="Thử lại" /></div>
-          ) : users.length === 0 ? (
-            <div className="p-12"><EmptyState title="Trống" message="Chưa có người dùng nào." /></div>
-          ) : (
-            <div className="table-responsive">
-              <table className="modern-table">
-                <thead>
-                  <tr>
-                    <th>Thành viên</th>
-                    <th>Vai trò</th>
-                    <th>Email</th>
-                    <th>Trạng thái</th>
-                    <th className="text-right">Tùy chọn</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <AnimatePresence mode="popLayout">
-                    {users.map((user, index) => (
-                      <motion.tr 
-                        key={user.id || index}
-                        variants={itemVariants}
-                        layout
-                        initial="hidden"
-                        animate="visible"
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        className="table-row"
-                      >
-                        <td>
-                          <div className="user-profile-cell">
-                            <div className="avatar-box">{user.fullName?.charAt(0) || 'U'}</div>
-                            <div className="user-details">
-                              <span className="user-name">{user.fullName || 'Ẩn danh'}</span>
-                              <span className="user-id">ID: {user.id?.substring(0, 6)}</span>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <div className={`badge-role ${getRoleClass(user.role)}`}>
-                            {getRoleIcon(user.role)}
-                            <span>{user.role}</span>
-                          </div>
-                        </td>
-                        <td><span className="text-sm font-medium">{user.email}</span></td>
-                        <td>
-                          <div className="status-indicator">
-                            <span className="dot active"></span>
-                            <span className="status-text">Online</span>
-                          </div>
-                        </td>
-                        <td className="text-right">
-                          <button className="btn-icon"><MoreVertical size={18} /></button>
-                        </td>
-                      </motion.tr>
-                    ))}
-                  </AnimatePresence>
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 };

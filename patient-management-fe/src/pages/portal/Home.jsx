@@ -190,7 +190,6 @@ const Home = () => {
         <AnimSection>
           <div className="section-head">
             <div><div className="section-title">Dịch vụ y khoa</div><div className="section-sub">Tiếp cận các chuyên khoa mũi nhọn tại Hậu Anh</div></div>
-            <button className="btn-link" onClick={() => navigate('/doctors')}>Tất cả dịch vụ <ArrowRight size={14} /></button>
           </div>
         </AnimSection>
         <StaggerGrid className="spec-grid-clean">
@@ -217,7 +216,6 @@ const Home = () => {
           <AnimSection>
             <div className="section-head">
               <div><div className="section-title">Chuyên gia hàng đầu</div><div className="section-sub">Bác sĩ tu nghiệp nước ngoài, giàu kinh nghiệm</div></div>
-              <button className="btn-link" onClick={() => navigate('/doctors')}>Xem tất cả <ArrowRight size={14} /></button>
             </div>
           </AnimSection>
           <div className="doctors-row">
