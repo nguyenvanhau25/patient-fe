@@ -32,8 +32,8 @@ const DoctorDetail = () => {
         doctorApi.getDetails(id),
         doctorApi.getReviews(id)
       ]);
-      setDoctor(docRes.data);
-      setReviews(revRes.data || []);
+      setDoctor(docRes.data.data);
+      setReviews(revRes.data.data || []);
     } catch (err) {
       console.error('Failed to fetch data:', err);
       setError('Không thể kết nối đến máy chủ.');
@@ -50,8 +50,8 @@ const DoctorDetail = () => {
     if (bookingStep === 2 && user && !patientInfo) {
       const fetchPatient = async () => {
         try {
-          const pRes = await patientApi.getProfile(user.id || 'patient_123');
-          setPatientInfo(pRes.data);
+          const pRes = await patientApi.getProfile(user.userId);
+          setPatientInfo(pRes.data.data || pRes.data);
         } catch (err) {
           setPatientInfo({ fullName: user.fullName || user.email || 'Bệnh nhân' });
         }
@@ -65,10 +65,11 @@ const DoctorDetail = () => {
     setIsSubmitting(true);
     try {
       await appointmentApi.create({
-        patientId: patientInfo?.id || user.id || 'patient_123',
+        patientId: user.userId,
         doctorId: id,
         appointmentDate: new Date().toISOString().split('T')[0],
-        appointmentTime: selectedTime,
+        startTime: selectedTime + ':00',
+        endTime: (parseInt(selectedTime.split(':')[0]) + 1).toString().padStart(2, '0') + ':00:00',
         chiefComplaint
       });
       alert('Đặt lịch thành công!');

@@ -25,10 +25,22 @@ export const useApi = (apiFunc, immediate = true) => {
     setError(null);
     try {
       const response = await apiFuncRef.current(...args);
-      // Hỗ trợ phản hồi từ Axios có .data, hoặc trả về dữ liệu trực tiếp
       const responseData = response?.data !== undefined ? response.data : response;
-      setData(responseData);
-      return responseData;
+      
+      // Tự động giải nén nếu là chuẩn ApiResponse { code, message, data }
+      // hoặc { data, meta } theo design rules
+      let finalData = responseData;
+      if (responseData && typeof responseData === 'object') {
+        if (responseData.data !== undefined) {
+          // Nếu có data và (có code hoặc có meta) thì đây là wrapper
+          if (responseData.code !== undefined || responseData.meta !== undefined) {
+            finalData = responseData.data;
+          }
+        }
+      }
+      
+      setData(finalData);
+      return finalData;
     } catch (err) {
       console.error('API Error:', err);
       const errMsg = err.response?.data?.message || err.message || 'Đã xảy ra lỗi, vui lòng thử lại sau.';

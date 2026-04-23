@@ -84,7 +84,7 @@ const Home = () => {
     const fetch = async () => {
       try {
         const res = await doctorApi.getTopRated();
-        if (res.data && res.data.length > 0) setTopDoctors(res.data.slice(0, 4));
+        if (res.data && res.data.data && res.data.data.length > 0) setTopDoctors(res.data.data.slice(0, 4));
         else setTopDoctors(mockDoctors);
       } catch {
         setTopDoctors(mockDoctors);

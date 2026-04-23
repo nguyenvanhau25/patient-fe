@@ -3,6 +3,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './utils/AuthContext';
 import { Loader2 } from 'lucide-react';
+import ProtectedRoute from './components/ProtectedRoute';
 
 // Layouts
 import AdminLayout from './layouts/AdminLayout';
@@ -47,7 +48,14 @@ function AppRoutes() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
 
           {/* Admin Routes */}
-          <Route path="/admin" element={<AdminLayout />}>
+          <Route 
+            path="/admin" 
+            element={
+              <ProtectedRoute allowedRoles={['ADMIN']}>
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<AdminDashboard />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="doctors" element={<AdminDoctors />} />

@@ -40,10 +40,10 @@ const AdminDashboard = () => {
       ]);
 
       return {
-        patientCount: countRes.data?.result || 1240,
-        revenue: revRes.data || 45000000,
-        pendingAppointments: appRes.data?.slice?.(0, 5) || [],
-        growthRate: growthRes.data?.result || 12
+        patientCount: countRes.data?.data || 1240,
+        revenue: revRes.data?.data || 45000000,
+        pendingAppointments: appRes.data?.data?.slice?.(0, 5) || appRes.data?.slice?.(0, 5) || [],
+        growthRate: growthRes.data?.data || 12
       };
     } catch (err) {
       console.error("Dashboard data fetch error:", err);

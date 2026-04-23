@@ -11,17 +11,15 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await authApi.login(credentials);
-      const { accessToken } = response.data;
-      localStorage.setItem('token', accessToken);
+      const { accessToken, refreshToken, userId, email, role, fullName } = response.data;
       
-      // Fetch user data after login
-      const validateResponse = await authApi.validate();
-      const userData = { 
-        email: validateResponse.data.email || credentials.email, 
-        role: validateResponse.data.role 
-      };
+      localStorage.setItem('token', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+      
+      const userData = { userId, email, role, fullName };
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
+      
       return { success: true };
     } catch (error) {
       console.error('Login failed:', error);
@@ -41,11 +39,13 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await authApi.logout();
+      const refreshToken = localStorage.getItem('refreshToken');
+      await authApi.logout(refreshToken);
     } catch (error) {
       console.error('Logout failed:', error);
     } finally {
       localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
       setUser(null);
       window.location.href = '/login';

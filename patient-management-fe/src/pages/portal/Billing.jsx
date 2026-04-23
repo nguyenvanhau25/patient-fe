@@ -21,13 +21,13 @@ const Billing = () => {
     setLoading(true);
     setError(null);
     try {
-      const accountId = user?.id || 'acc_001';
-      const [accRes, txRes] = await Promise.all([
-        billingApi.getAccount(accountId),
-        billingApi.getTransactions(accountId)
-      ]);
-      setAccount(accRes.data);
-      setTransactions(txRes.data || []);
+      const patientId = user.userId;
+      const accRes = await billingApi.getAccountByPatientId(patientId);
+      const accData = accRes.data.data || accRes.data;
+      setAccount(accData);
+
+      const txRes = await billingApi.getTransactions(accData.id);
+      setTransactions(txRes.data.data || txRes.data || []);
     } catch (err) {
       console.error('Failed to fetch billing data:', err);
       setError('Không thể kết nối đến Billing Service. Vui lòng kiểm tra Backend.');
@@ -37,14 +37,16 @@ const Billing = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    if (user?.userId) {
+      fetchData();
+    }
   }, [user]);
 
   const handleRecharge = async () => {
     if (!rechargeAmount || isNaN(rechargeAmount)) return;
     setIsSubmitting(true);
     try {
-      await billingApi.recharge(account?.accountId || user.id || 'acc_001', parseInt(rechargeAmount));
+      await billingApi.recharge(account?.id, { amount: parseInt(rechargeAmount) });
       setSuccess(true);
       setTimeout(() => {
         setShowRechargeModal(false);
@@ -145,16 +147,16 @@ const Billing = () => {
                 className="transaction-scroll-list"
               >
                 {transactions.length > 0 ? transactions.map((tx) => (
-                  <motion.div key={tx.transactionId} variants={itemVariants} className="tx-premium-item">
-                    <div className={`tx-p-icon ${tx.type === 'CREDIT' || tx.type === 'IN' ? 'in' : 'out'}`}>
-                      {tx.type === 'CREDIT' || tx.type === 'IN' ? <ArrowDownLeft size={20} /> : <ArrowUpRight size={20} />}
+                  <motion.div key={tx.id} variants={itemVariants} className="tx-premium-item">
+                    <div className={`tx-p-icon ${tx.type === 'CREDIT' || tx.type === 'IN' || tx.type === 'RECHARGE' ? 'in' : 'out'}`}>
+                      {tx.type === 'CREDIT' || tx.type === 'IN' || tx.type === 'RECHARGE' ? <ArrowDownLeft size={20} /> : <ArrowUpRight size={20} />}
                     </div>
                     <div className="tx-p-main">
                       <div className="tx-p-title">{tx.description}</div>
-                      <div className="tx-p-date">{new Date(tx.date).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}</div>
+                      <div className="tx-p-date">{new Date(tx.createdAt).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}</div>
                     </div>
-                    <div className={`tx-p-amount ${tx.type === 'CREDIT' || tx.type === 'IN' ? 'in' : 'out'}`}>
-                      {tx.type === 'CREDIT' || tx.type === 'IN' ? '+' : '-'}{Math.abs(tx.amount).toLocaleString()}đ
+                    <div className={`tx-p-amount ${tx.type === 'CREDIT' || tx.type === 'IN' || tx.type === 'RECHARGE' ? 'in' : 'out'}`}>
+                      {tx.type === 'CREDIT' || tx.type === 'IN' || tx.type === 'RECHARGE' ? '+' : '-'}{Math.abs(tx.amount).toLocaleString()}đ
                     </div>
                   </motion.div>
                 )) : (

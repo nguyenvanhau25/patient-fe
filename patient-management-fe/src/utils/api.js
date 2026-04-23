@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_GATEWAY_URL = 'http://localhost:4004';
-const USE_MOCK_FALLBACK = true;
+const API_GATEWAY_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4004';
+const USE_MOCK_FALLBACK = import.meta.env.VITE_ENABLE_API_MOCK === 'true'; // Default is now false if env is not set to 'true'
 
 const api = axios.create({
   baseURL: API_GATEWAY_URL,
@@ -148,10 +148,36 @@ const MOCKS = {
 
 };
 
-// Auto-Mock Interceptor
+// Auto-Refresh & Mock Interceptor
 api.interceptors.response.use(
   (res) => res,
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
+
+    // Handle 401 and attempt refresh
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (refreshToken) {
+          const res = await authApi.refresh({ refreshToken });
+          if (res.status === 200) {
+            const { accessToken } = res.data;
+            localStorage.setItem('token', accessToken);
+            api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+            return api(originalRequest);
+          }
+        }
+      } catch (refreshError) {
+        console.error('Token refresh failed:', refreshError);
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      }
+    }
+
+    // Pass-through if not 401 or refresh failed but we want to try mock
     if (((!error.response || error.code === 'ERR_NETWORK') || (error.response && error.response.status === 500)) && USE_MOCK_FALLBACK) {
       const fullUrl = error.config.url;
       const url = fullUrl.split('?')[0];
@@ -171,7 +197,7 @@ api.interceptors.response.use(
       const mockKey = Object.keys(MOCKS).sort((a, b) => b.length - a.length).find(key => url.includes(key));
 
       if (mockKey) {
-        console.warn(`[MOCK SERVER] Backend down at 4004. Serving fake data for: ${mockKey}`);
+        console.warn(`[MOCK SERVER] Backend down at ${API_GATEWAY_URL}. Serving fake data for: ${mockKey}`);
         return Promise.resolve({ data: MOCKS[mockKey], status: 200 });
       }
 
@@ -193,8 +219,8 @@ export const authApi = {
   signup: (data) => api.post('/auth/signup', data),
   validate: () => api.get('/auth/validate'),
   refresh: (data) => api.post('/auth/refresh', data),
-  logout: () => api.delete('/auth/logout'),
-  logoutAll: () => api.delete('/auth/logout/all'),
+  logout: (refreshToken) => api.delete('/auth/logout', { params: { refreshToken } }),
+  logoutAll: (email) => api.delete('/auth/logout/all', { params: { email } }),
   resetPassword: (data) => api.post('/auth/reset', data),
   getAllUsers: () => api.get('/auth/user'),
 };
@@ -280,6 +306,7 @@ export const pharmacyApi = {
 export const billingApi = {
   createAccount: (data) => api.post('/api/billing/accounts', data),
   getAccount: (id) => api.get(`/api/billing/accounts/${id}`),
+  getAccountByPatientId: (patientId) => api.get(`/api/billing/accounts/patient/${patientId}`),
   updateStatus: (id, data) => api.patch(`/api/billing/accounts/${id}/status`, data),
   recharge: (id, amount) => api.patch(`/api/billing/accounts/${id}/recharge`, { amount }),
   getTransactions: (accountId) => api.get(`/api/billing/accounts/${accountId}/transactions`),
@@ -289,12 +316,12 @@ export const billingApi = {
 };
 
 export const analyticsApi = {
-  getPatientCount: () => api.get('/api/analytics/patients/count'),
-  getNewPatients: () => api.get('/api/analytics/patients'),
+  getPatientCount: (params) => api.get('/api/analytics/patients/count', { params }),
+  getNewPatients: (params) => api.get('/api/analytics/patients', { params }),
   getGrowthRate: () => api.get('/api/analytics/growth-rate'),
-  getRevenue: () => api.get('/api/analytics/revenue'),
+  getRevenue: (params) => api.get('/api/analytics/revenue', { params }),
   getRevenuePerPatient: (patientId) => api.get(`/api/analytics/revenue/patient/${patientId}`),
-  getTopPatients: () => api.get('/api/analytics/top-patient'),
+  getTopPatients: (params) => api.get('/api/analytics/top-patient', { params }),
   getCompletedTransactions: () => api.get('/api/analytics/completed/count'),
 };
 

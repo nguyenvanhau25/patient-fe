@@ -16,9 +16,11 @@ const DoctorSearch = () => {
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     specialization: queryParams.get('specialization') || '',
-    experience: '',
-    rating: ''
+    experienceMin: '',
+    minRating: '',
+    page: 0
   });
+  const [pagination, setPagination] = useState({ totalPages: 0, totalElements: 0 });
 
   const fetchDoctors = async () => {
     setLoading(true);
@@ -26,10 +28,15 @@ const DoctorSearch = () => {
     try {
       const response = await doctorApi.search({
         specialization: filters.specialization !== 'Tất cả' ? filters.specialization : '',
-        experience: filters.experience,
-        rating: filters.rating
+        experienceMin: filters.experienceMin,
+        minRating: filters.minRating,
+        page: filters.page
       });
-      setDoctors(response.data || []);
+      // response.data is ApiResponse object, response.data.data is the content list
+      setDoctors(response.data.data || []);
+      if (response.data.meta) {
+        setPagination(response.data.meta);
+      }
     } catch (err) {
       console.error('Failed to fetch doctors:', err);
       if (!err.response) {
@@ -38,7 +45,7 @@ const DoctorSearch = () => {
         // Fallback to all doctors if filtering fails but server is up
         try {
           const allRes = await doctorApi.getAll();
-          setDoctors(allRes.data || []);
+          setDoctors(allRes.data.data || allRes.data || []);
         } catch (innerErr) {
           setDoctors([]);
           setError('Đã xảy ra lỗi khi tải danh sách bác sĩ.');
@@ -57,9 +64,13 @@ const DoctorSearch = () => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
 
-  const applyFilters = () => {
+  const applyFilters = (newPage = 0) => {
+    setFilters(prev => ({ ...prev, page: newPage }));
     const params = new URLSearchParams();
     if (filters.specialization && filters.specialization !== 'Tất cả') params.append('specialization', filters.specialization);
+    if (filters.experienceMin) params.append('experienceMin', filters.experienceMin);
+    if (filters.minRating) params.append('minRating', filters.minRating);
+    if (newPage > 0) params.append('page', newPage);
     navigate({ search: params.toString() });
   };
 
@@ -84,7 +95,7 @@ const DoctorSearch = () => {
           </div>
           <div className="filter-group">
             <label>Kinh nghiệm</label>
-            <select name="experience" value={filters.experience} onChange={handleFilterChange}>
+            <select name="experienceMin" value={filters.experienceMin} onChange={handleFilterChange}>
               <option value="">Tất cả</option>
               <option value="5">Trên 5 năm</option>
               <option value="10">Trên 10 năm</option>
@@ -92,7 +103,7 @@ const DoctorSearch = () => {
           </div>
           <div className="filter-group">
             <label>Đánh giá</label>
-            <select name="rating" value={filters.rating} onChange={handleFilterChange}>
+            <select name="minRating" value={filters.minRating} onChange={handleFilterChange}>
               <option value="">Tất cả</option>
               <option value="4">4+ Sao</option>
               <option value="5">5 Sao</option>
@@ -157,6 +168,26 @@ const DoctorSearch = () => {
                 <div className="no-data-full">
                   <p>Không tìm thấy bác sĩ phù hợp với yêu cầu của bạn.</p>
                   <button className="btn-text" onClick={() => navigate('/doctors')}>Xóa bộ lọc</button>
+                </div>
+              )}
+              
+              {pagination.totalPages > 1 && (
+                <div className="pagination-premium flex-center gap-4 mt-10">
+                  <button 
+                    className="p-btn" 
+                    disabled={filters.page === 0}
+                    onClick={() => applyFilters(filters.page - 1)}
+                  >
+                    Trước
+                  </button>
+                  <span className="p-info">Trang {filters.page + 1} / {pagination.totalPages}</span>
+                  <button 
+                    className="p-btn"
+                    disabled={filters.page >= pagination.totalPages - 1}
+                    onClick={() => applyFilters(filters.page + 1)}
+                  >
+                    Sau
+                  </button>
                 </div>
               )}
             </div>

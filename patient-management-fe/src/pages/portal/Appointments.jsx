@@ -20,7 +20,7 @@ const Appointments = () => {
     loading,
     error,
     execute: fetchAppointments
-  } = useApi(() => appointmentApi.getAll({ patientId: user?.id || 'patient_123' }));
+  } = useApi(() => user?.userId ? appointmentApi.getAll({ patientId: user.userId }) : Promise.resolve({ data: [] }));
 
   const appointments = data || [];
   const upcomingApts = appointments.filter(a => a.status === 'PENDING' || a.status === 'CONFIRMED');
