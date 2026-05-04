@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Calendar, Clock, User, CheckCircle, XCircle, RefreshCw, Filter, ChevronLeft, ChevronRight, MoreVertical, Search, CheckCircle2, AlertCircle, Loader2, Check, X, UserRound } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { appointmentApi } from '../../utils/api';
+import { appointmentApi, doctorApi } from '../../utils/api';
 import { useApi } from '../../hooks/useApi';
 import { LoadingState } from '../../components/ui/LoadingState';
 import { EmptyState } from '../../components/ui/EmptyState';
@@ -10,11 +10,18 @@ import './AdminAppointments.css';
 
 const AdminAppointments = () => {
   const [activeTab, setActiveTab] = useState('grid');
-  const { data: rawAppointments, loading, error, execute: fetchApts } = useApi(() => appointmentApi.getAll());
+  const [doctors, setDoctors] = useState([]);
   
   const timeSlots = ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
-  const doctors = ['BS. Minh', 'BS. Lan', 'BS. Hùng', 'BS. Phượng'];
   
+  React.useEffect(() => {
+    doctorApi.getAll().then(res => {
+      const docs = res.data?.data || res.data || res;
+      if (Array.isArray(docs)) setDoctors(docs.map(d => d.name));
+    }).catch(console.error);
+  }, []);
+  
+  const { data: rawAppointments, loading, error, execute: fetchApts } = useApi(() => appointmentApi.getAll());
   const appointments = rawAppointments || [];
 
   const handleConfirm = async (id) => {

@@ -52,6 +52,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [topDoctors, setTopDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const categories = [
     { id: 1, label: 'Nội khoa', icon: <Activity size={22} />, color: '#eff6ff', stroke: '#0284c7', spec: 'Internal Medicine', desc: 'Sức khỏe tổng quát', count: '120 bác sĩ', countColor: '#0284c7', countBg: '#f0f9ff' },
@@ -67,12 +68,7 @@ const Home = () => {
     { icon: <Clock size={20} />, iconBg: '#fdf2f8', iconColor: '#9333ea', value: '24/7', label: 'Hỗ trợ liên tục' },
   ];
 
-  const mockDoctors = [
-    { id: 'doc_1', initials: 'MK', color: '#0ea5e9', spec: 'Tim mạch', name: 'TS. BS. Nguyễn Minh Khoa', rating: 5.0, reviews: 142, patients: '1,240' },
-    { id: 'doc_2', initials: 'TL', color: '#8b5cf6', spec: 'Nội khoa', name: 'PGS. TS. Trần Thị Lan', rating: 4.9, reviews: 98, patients: '980' },
-    { id: 'doc_3', initials: 'PH', color: '#f59e0b', spec: 'Nhi khoa', name: 'BS. CKI. Phạm Quốc Hùng', rating: 4.8, reviews: 77, patients: '650' },
-    { id: 'doc_4', initials: 'VT', color: '#10b981', spec: 'Dược lý', name: 'TS. DS. Vũ Thị Thu', rating: 4.9, reviews: 53, patients: '430' },
-  ];
+// Mock data removed. Relying on API.
 
   const news = [
     { id: 1, img: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80', tag: 'Sự kiện', tagColor: '#0284c7', date: '12 Tháng 4, 2026', title: 'Khánh thành trung tâm robot phẫu thuật Da Vinci thế hệ mới', excerpt: 'Ứng dụng công nghệ hàng đầu trong phẫu thuật ít xâm lấn, mang lại độ chính xác tối ưu cho bệnh nhân.' },
@@ -85,9 +81,11 @@ const Home = () => {
       try {
         const res = await doctorApi.getTopRated();
         if (res.data && res.data.data && res.data.data.length > 0) setTopDoctors(res.data.data.slice(0, 4));
-        else setTopDoctors(mockDoctors);
-      } catch {
-        setTopDoctors(mockDoctors);
+        else setTopDoctors([]);
+      } catch (err) {
+        console.error('Home fetch error:', err);
+        setError('Không thể kết nối đến máy chủ. Vui lòng kiểm tra Backend.');
+        setTopDoctors([]);
       } finally {
         setLoading(false);
       }
@@ -219,10 +217,16 @@ const Home = () => {
             </div>
           </AnimSection>
           <div className="doctors-row">
-            {(loading ? mockDoctors : topDoctors.length > 0 ? topDoctors.map(d => ({
-              id: d.id, initials: d.name?.split(' ').slice(-2).map(w => w[0]).join(''), color: '#0ea5e9',
-              spec: d.specialization, name: d.name, rating: d.rating || 4.9, reviews: d.reviewCount || 0, patients: d.reviewCount || 0
-            })) : mockDoctors).map((doc, i) => (
+            {topDoctors.length > 0 ? topDoctors.map(d => ({
+              id: d.id, 
+              initials: d.name ? d.name.split(' ').slice(-2).map(w => w[0]).join('') : 'BS', 
+              color: '#0ea5e9',
+              spec: d.specialization || 'Đa khoa', 
+              name: d.name || 'Bác sĩ ẩn danh', 
+              rating: d.rating || 4.9, 
+              reviews: d.reviewCount || 0, 
+              patients: d.reviewCount || 0
+            })).map((doc, i) => (
               <motion.div
                 key={doc.id || i}
                 className="doc-card-clean"
@@ -240,7 +244,11 @@ const Home = () => {
                 <div className="doc-pts">· {doc.patients} bệnh nhân</div>
                 <button className="doc-book-btn" onClick={e => { e.stopPropagation(); navigate(`/doctor/${doc.id}`); }}>Đặt lịch khám</button>
               </motion.div>
-            ))}
+            )) : (
+              <div className="no-data-notice-premium">
+                {error ? 'Không thể kết nối đến máy chủ. Vui lòng kiểm tra Backend.' : 'Hiện chưa có bác sĩ nào trực tuyến.'}
+              </div>
+            )}
             <motion.div
               className="doc-card-clean doc-more"
               whileHover={{ borderColor: '#0ea5e9' }}

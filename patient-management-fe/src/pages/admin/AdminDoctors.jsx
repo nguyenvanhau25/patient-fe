@@ -66,7 +66,7 @@ const AdminDoctors = () => {
           <h1 className="text-gradient">Đội ngũ Bác sĩ</h1>
           <p className="text-muted">Quản lý chuyên môn và lịch biểu của các bác sĩ.</p>
         </motion.div>
-        <motion.button 
+        <motion.button
           variants={itemVariants}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -81,7 +81,7 @@ const AdminDoctors = () => {
       <AnimatePresence>
         {isModalOpen && (
           <div className="modal-overlay">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
@@ -91,7 +91,7 @@ const AdminDoctors = () => {
                 <h3>Thêm hồ sơ Bác sĩ</h3>
                 <button className="close-btn" onClick={() => setIsModalOpen(false)}><X size={20} /></button>
               </div>
-              
+
               <div className="modal-body-p">
                 {showSuccess ? (
                   <div className="success-state-modal">
@@ -103,17 +103,17 @@ const AdminDoctors = () => {
                   <form onSubmit={handleAddDoctor} className="premium-form">
                     <div className="form-group-p">
                       <label>Họ và tên Bác sĩ</label>
-                      <input 
-                        required type="text" placeholder="BS. Nguyễn Văn A" 
-                        value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
+                      <input
+                        required type="text" placeholder="BS. Nguyễn Văn A"
+                        value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
                       />
                     </div>
                     <div className="form-row-p">
                       <div className="form-group-p flex-1">
                         <label>Chuyên khoa</label>
-                        <select 
+                        <select
                           value={formData.specialization}
-                          onChange={e => setFormData({...formData, specialization: e.target.value})}
+                          onChange={e => setFormData({ ...formData, specialization: e.target.value })}
                         >
                           <option value="Nội tổng quát">Nội tổng quát</option>
                           <option value="Tim mạch">Tim mạch</option>
@@ -124,33 +124,33 @@ const AdminDoctors = () => {
                       </div>
                       <div className="form-group-p flex-1">
                         <label>Kinh nghiệm (năm)</label>
-                        <input 
+                        <input
                           type="number" value={formData.yearsOfExperience}
-                          onChange={e => setFormData({...formData, yearsOfExperience: parseInt(e.target.value)})}
+                          onChange={e => setFormData({ ...formData, yearsOfExperience: parseInt(e.target.value) })}
                         />
                       </div>
                     </div>
                     <div className="form-row-p">
                       <div className="form-group-p flex-1">
                         <label>Email</label>
-                        <input 
+                        <input
                           type="email" placeholder="doctor@hospital.vn"
-                          value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})}
+                          value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })}
                         />
                       </div>
                       <div className="form-group-p flex-1">
                         <label>Điện thoại</label>
-                        <input 
+                        <input
                           type="tel" placeholder="0901234567"
-                          value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})}
+                          value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })}
                         />
                       </div>
                     </div>
                     <div className="form-group-p">
                       <label>Phí khám (VNĐ)</label>
-                      <input 
+                      <input
                         type="number" step="10000"
-                        value={formData.consultationFee} onChange={e => setFormData({...formData, consultationFee: parseInt(e.target.value)})}
+                        value={formData.consultationFee} onChange={e => setFormData({ ...formData, consultationFee: parseInt(e.target.value) })}
                       />
                     </div>
                     <div className="modal-actions-p mt-4">
@@ -177,8 +177,8 @@ const AdminDoctors = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {doctors.map((doc) => (
-              <motion.div 
-                key={doc.id} 
+              <motion.div
+                key={doc.id}
                 variants={itemVariants}
                 whileHover={{ y: -8 }}
                 className="card glass doctor-card-premium"
@@ -186,7 +186,7 @@ const AdminDoctors = () => {
                 <div className="doc-card-top">
                   <div className="doc-avatar-large">
                     {doc.profileImageUrl ? (
-                      <img src={doc.profileImageUrl.startsWith('http') ? doc.profileImageUrl : `http://localhost:4004${doc.profileImageUrl}`} alt={doc.name} />
+                      <img src={doc.profileImageUrl.startsWith('http') ? doc.profileImageUrl : `${API_GATEWAY_URL}${doc.profileImageUrl}`} alt={doc.name} />
                     ) : (
                       <div className="avatar-fallback">{doc.name?.split(' ').pop()?.[0] || 'D'}</div>
                     )}
