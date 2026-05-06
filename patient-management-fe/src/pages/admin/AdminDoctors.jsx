@@ -6,6 +6,7 @@ import { useApi } from '../../hooks/useApi';
 import { LoadingState } from '../../components/ui/LoadingState';
 import { EmptyState } from '../../components/ui/EmptyState';
 import './AdminUsers.css'; // Reuse table and modal styles
+const API_GATEWAY_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4004';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -33,12 +34,40 @@ const AdminDoctors = () => {
     name: '',
     specialization: 'Đa khoa',
     email: '',
-    phone: '',
+    phoneNumber: '',
     consultationFee: 300000,
-    yearsOfExperience: 5
+    experienceYears: 5
   });
 
-  const doctors = data || [];
+  const handleAction = async (type, doctor) => {
+    if (type === 'Xóa') {
+      if (window.confirm(`Bạn có chắc chắn muốn xóa hồ sơ bác sĩ ${doctor.name}?`)) {
+        try {
+          await doctorApi.delete(doctor.id);
+          alert('Đã xóa thành công!');
+          fetchDocs();
+        } catch (err) {
+          alert('Lỗi: ' + (err.response?.data?.message || 'Không thể xóa'));
+        }
+      }
+      return;
+    }
+    
+    if (type === 'Sửa') {
+      setFormData({
+        ...doctor,
+        consultationFee: doctor.consultationFee || 300000,
+        experienceYears: doctor.experienceYears || 5
+      });
+      setIsModalOpen(true);
+      return;
+    }
+
+    console.log(`${type} doctor:`, doctor);
+    alert(`Chức năng ${type} bác sĩ ${doctor.name} đang được phát triển.`);
+  };
+
+  const doctors = Array.isArray(data) ? data : (data?.data || []);
 
   const handleAddDoctor = async (e) => {
     e.preventDefault();
@@ -50,7 +79,7 @@ const AdminDoctors = () => {
         setShowSuccess(false);
         setIsModalOpen(false);
         fetchDocs();
-        setFormData({ name: '', specialization: 'Đa khoa', email: '', phone: '', consultationFee: 300000, yearsOfExperience: 5 });
+        setFormData({ name: '', specialization: 'Đa khoa', email: '', phoneNumber: '', consultationFee: 300000, experienceYears: 5 });
       }, 1500);
     } catch (err) {
       alert('Lỗi: ' + (err.response?.data?.message || 'Không thể tạo hồ sơ bác sĩ'));
@@ -125,8 +154,8 @@ const AdminDoctors = () => {
                       <div className="form-group-p flex-1">
                         <label>Kinh nghiệm (năm)</label>
                         <input
-                          type="number" value={formData.yearsOfExperience}
-                          onChange={e => setFormData({ ...formData, yearsOfExperience: parseInt(e.target.value) })}
+                          type="number" value={formData.experienceYears}
+                          onChange={e => setFormData({ ...formData, experienceYears: parseInt(e.target.value) })}
                         />
                       </div>
                     </div>
@@ -142,7 +171,7 @@ const AdminDoctors = () => {
                         <label>Điện thoại</label>
                         <input
                           type="tel" placeholder="0901234567"
-                          value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                          value={formData.phoneNumber} onChange={e => setFormData({ ...formData, phoneNumber: e.target.value })}
                         />
                       </div>
                     </div>
@@ -186,7 +215,7 @@ const AdminDoctors = () => {
                 <div className="doc-card-top">
                   <div className="doc-avatar-large">
                     {doc.profileImageUrl ? (
-                      <img src={doc.profileImageUrl.startsWith('http') ? doc.profileImageUrl : `${API_GATEWAY_URL}${doc.profileImageUrl}`} alt={doc.name} />
+                      <img src={doc.profileImageUrl?.startsWith('http') ? doc.profileImageUrl : `${API_GATEWAY_URL}${doc.profileImageUrl}`} alt={doc.name} />
                     ) : (
                       <div className="avatar-fallback">{doc.name?.split(' ').pop()?.[0] || 'D'}</div>
                     )}
@@ -208,7 +237,7 @@ const AdminDoctors = () => {
                   </div>
                   <div className="doc-stat-item border-l">
                     <Briefcase size={16} className="text-info" />
-                    <b>{doc.yearsOfExperience || 1}</b>
+                    <b>{doc.experienceYears || 1}</b>
                     <span>Năm nghề</span>
                   </div>
                 </div>
@@ -218,7 +247,7 @@ const AdminDoctors = () => {
                     <Mail size={16} /> <span>{doc.email || 'doctor@hospital.vn'}</span>
                   </div>
                   <div className="contact-row">
-                    <Phone size={16} /> <span>{doc.phone || 'Chưa cập nhật'}</span>
+                    <Phone size={16} /> <span>{doc.phoneNumber || 'Chưa cập nhật'}</span>
                   </div>
                   <div className="contact-row text-info">
                     <DollarSign size={16} /> <b>{doc.consultationFee?.toLocaleString()}đ</b> / lượt
@@ -226,9 +255,9 @@ const AdminDoctors = () => {
                 </div>
 
                 <div className="doc-card-actions mt-6">
-                  <button className="btn-icon-p blue" title="Xem lịch"><Calendar size={18} /></button>
-                  <button className="btn-icon-p info" title="Sửa"><Edit size={18} /></button>
-                  <button className="btn-icon-p red" title="Xóa"><Trash2 size={18} /></button>
+                  <button className="btn-icon-p blue" title="Xem lịch" onClick={() => handleAction('Xem lịch', doc)}><Calendar size={18} /></button>
+                  <button className="btn-icon-p info" title="Sửa" onClick={() => handleAction('Sửa', doc)}><Edit size={18} /></button>
+                  <button className="btn-icon-p red" title="Xóa" onClick={() => handleAction('Xóa', doc)}><Trash2 size={18} /></button>
                 </div>
               </motion.div>
             ))}

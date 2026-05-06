@@ -32,8 +32,8 @@ const DoctorDetail = () => {
         doctorApi.getDetails(id),
         doctorApi.getReviews(id)
       ]);
-      setDoctor(docRes.data.data);
-      setReviews(revRes.data.data || []);
+      setDoctor(docRes.data.data || docRes.data);
+      setReviews(revRes.data.data || revRes.data || []);
     } catch (err) {
       console.error('Failed to fetch data:', err);
       setError('Không thể kết nối đến máy chủ.');
@@ -68,9 +68,9 @@ const DoctorDetail = () => {
         patientId: user.userId,
         doctorId: id,
         appointmentDate: new Date().toISOString().split('T')[0],
-        startTime: selectedTime + ':00',
-        endTime: (parseInt(selectedTime.split(':')[0]) + 1).toString().padStart(2, '0') + ':00:00',
-        chiefComplaint
+        startTime: selectedTime,
+        endTime: (parseInt(selectedTime.split(':')[0]) + 1).toString().padStart(2, '0') + ':00',
+        // chiefComplaint // Bỏ đi vì backend ko hỗ trợ
       });
       alert('Đặt lịch thành công!');
       navigate('/appointments');
@@ -101,13 +101,13 @@ const DoctorDetail = () => {
       <div className="detail-header glass card">
         <div className="doc-profile-main">
           <div className="doc-avatar-large">
-            {doctor.profileImage ? <img src={doctor.profileImage} alt={doctor.name} /> : doctor.name.charAt(0)}
+            {doctor.profileImageUrl ? <img src={doctor.profileImageUrl} alt={doctor.name} /> : doctor.name?.charAt(0)}
           </div>
           <div className="doc-titles">
             <h1>{doctor.name}</h1>
             <p className="spec">{doctor.specialization}</p>
             <div className="tags">
-              <span className="tag"><Award size={14} /> {doctor.yearsOfExperience || 5} năm kinh nghiệm</span>
+              <span className="tag"><Award size={14} /> {doctor.experienceYears || 5} năm kinh nghiệm</span>
               <span className="tag"><Star size={14} className="fill-star" /> {doctor.rating || 5.0} ({reviews.length} đánh giá)</span>
             </div>
           </div>

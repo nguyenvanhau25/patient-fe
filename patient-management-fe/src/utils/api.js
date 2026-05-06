@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-const API_GATEWAY_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4004';
-// Mock fallback disabled for production security.
 
-const api = axios.create({
-  baseURL: API_GATEWAY_URL,
+
+export const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:4004',
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -65,6 +64,7 @@ export const doctorApi = {
   getById: (id) => api.get(`/api/doctors/${id}`),
   getDetails: (id) => api.get(`/api/doctors/${id}/details`),
   update: (id, data) => api.put(`/api/doctors/${id}`, data),
+  delete: (id) => api.delete(`/api/doctors/${id}`),
   updateImage: (id, data) => api.patch(`/api/doctors/${id}/image`, data),
   createSchedule: (id, data) => api.post(`/api/doctors/${id}/schedules`, data),
   getAvailability: (id) => api.get(`/api/doctors/${id}/availability`),

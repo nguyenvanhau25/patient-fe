@@ -34,14 +34,14 @@ const AdminPatients = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: '', gender: 'Nam', dateOfBirth: '', phone: '', address: '', bloodType: 'O'
+    name: '', email: '', dateOfBirth: '', address: ''
   });
 
-  const patients = rawPatients || [];
+  const patients = Array.isArray(rawPatients) ? rawPatients : (rawPatients?.data || []);
 
   const filteredPatients = useMemo(() => {
     return patients.filter(p =>
-      (p.fullName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (p.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       (p.phone || '').includes(searchTerm) ||
       (p.id || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -57,7 +57,7 @@ const AdminPatients = () => {
         setShowSuccess(false);
         setIsModalOpen(false);
         fetchPatients();
-        setFormData({ fullName: '', gender: 'Nam', dateOfBirth: '', phone: '', address: '', bloodType: 'O' });
+        setFormData({ name: '', email: '', dateOfBirth: '', address: '' });
       }, 1500);
     } catch (err) {
       alert('Lỗi: ' + (err.response?.data?.message || 'Không thể tạo hồ sơ'));
@@ -102,16 +102,10 @@ const AdminPatients = () => {
                   </div>
                 ) : (
                   <form onSubmit={handleAddPatient} className="premium-form">
-                    <div className="form-group-p"><label>Họ và tên</label><input required type="text" placeholder="Nguyễn Văn A" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} /></div>
-                    <div className="form-row-p">
-                      <div className="form-group-p flex-1"><label>Giới tính</label><select value={formData.gender} onChange={e => setFormData({ ...formData, gender: e.target.value })}><option value="Nam">Nam</option><option value="Nữ">Nữ</option></select></div>
-                      <div className="form-group-p flex-1"><label>Ngày sinh</label><input required type="date" value={formData.dateOfBirth} onChange={e => setFormData({ ...formData, dateOfBirth: e.target.value })} /></div>
-                    </div>
-                    <div className="form-row-p">
-                      <div className="form-group-p flex-1"><label>Số điện thoại</label><input required type="tel" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} /></div>
-                      <div className="form-group-p flex-1"><label>Nhóm máu</label><select value={formData.bloodType} onChange={e => setFormData({ ...formData, bloodType: e.target.value })}><option value="O">O</option><option value="A">A</option><option value="B">B</option><option value="AB">AB</option></select></div>
-                    </div>
-                    <div className="form-group-p"><label>Địa chỉ</label><input type="text" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} /></div>
+                    <div className="form-group-p"><label>Họ và tên</label><input required type="text" placeholder="Nguyễn Văn A" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} /></div>
+                    <div className="form-group-p"><label>Email</label><input required type="email" placeholder="patient@example.com" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} /></div>
+                    <div className="form-group-p"><label>Ngày sinh</label><input required type="date" value={formData.dateOfBirth} onChange={e => setFormData({ ...formData, dateOfBirth: e.target.value })} /></div>
+                    <div className="form-group-p"><label>Địa chỉ</label><input required type="text" placeholder="Hà Nội, Việt Nam" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} /></div>
                     <div className="modal-actions-p mt-4">
                       <button type="button" className="btn-cancel" onClick={() => setIsModalOpen(false)}>Hủy</button>
                       <button type="submit" className="btn-submit" disabled={isSubmitting}>{isSubmitting ? <Loader2 className="animate-spin" size={18} /> : 'Lưu Hồ sơ'}</button>
@@ -133,7 +127,7 @@ const AdminPatients = () => {
           {loading ? <LoadingState message="Đang tải..." /> : error ? <EmptyState isError title="Lỗi" message={error} onAction={fetchPatients} /> : filteredPatients.length === 0 ? <EmptyState title="Kết quả trống" /> : (
             <div className="table-responsive">
               <table className="modern-table">
-                <thead><tr><th>Mã BN</th><th>Bệnh nhân</th><th>Ngày sinh</th><th>Giới tính</th><th>Liên hệ</th><th className="text-right">Hành động</th></tr></thead>
+                <thead><tr><th>Mã BN</th><th>Bệnh nhân</th><th>Ngày sinh</th><th>Email</th><th>Địa chỉ</th><th className="text-right">Hành động</th></tr></thead>
                 <tbody>
                   <AnimatePresence mode="popLayout">
                     {filteredPatients.map((p) => p && (
@@ -141,13 +135,13 @@ const AdminPatients = () => {
                         <td><span className="badge-role role-user">{p.id?.substring(0, 8) || 'N/A'}</span></td>
                         <td>
                           <div className="user-profile-cell">
-                            <div className="avatar-box bg-info-light text-info">{(p.fullName || 'P').charAt(0)}</div>
-                            <span className="user-name font-bold">{p.fullName || 'Bệnh nhân ẩn'}</span>
+                            <div className="avatar-box bg-info-light text-info">{(p.name || 'P').charAt(0)}</div>
+                            <span className="user-name font-bold">{p.name || 'Bệnh nhân ẩn'}</span>
                           </div>
                         </td>
                         <td><div className="contact-item"><Calendar size={14} /> {p.dateOfBirth || p.dob || 'Chưa rõ'}</div></td>
-                        <td>{p.gender || 'N/A'}</td>
-                        <td><div className="contact-item"><Phone size={14} /> {p.phone || 'N/A'}</div></td>
+                        <td><div className="contact-item">{p.email || 'N/A'}</div></td>
+                        <td><div className="contact-item"><MapPin size={14} /> {p.address || 'N/A'}</div></td>
                         <td className="text-right">
                           <div className="flex gap-2 justify-end">
                             <button className="btn-icon-p info" title="Xem chi tiết"><Eye size={16} /></button>

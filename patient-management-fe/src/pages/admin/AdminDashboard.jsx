@@ -30,25 +30,31 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   const fetchDashboardData = async () => {
-    try {
-      const today = new Date().toISOString().split('T')[0];
-      const [countRes, revRes, appRes, growthRes] = await Promise.all([
-        analyticsApi.getPatientCount({ date: today }),
-        analyticsApi.getRevenue({ date: today }),
-        appointmentApi.getAll({ status: 'PENDING' }),
-        analyticsApi.getGrowthRate(),
-      ]);
+    const today = new Date().toISOString().split('T')[0];
 
-      return {
-        patientCount: countRes.data?.data || 0,
-        revenue: revRes.data?.data || 0,
-        pendingAppointments: appRes.data?.data?.slice?.(0, 5) || appRes.data?.slice?.(0, 5) || [],
-        growthRate: growthRes.data?.data || 0
-      };
-    } catch (err) {
-      console.error("Dashboard data fetch error:", err);
-      return { patientCount: 0, revenue: 0, pendingAppointments: [], growthRate: 0 };
-    }
+    const safeGet = async (request, fallback) => {
+      try {
+        const response = await request();
+        return response?.data?.data ?? response?.data ?? fallback;
+      } catch (err) {
+        console.error('Dashboard data fetch error:', err);
+        return fallback;
+      }
+    };
+
+    const [patientCount, revenue, pendingAppointments, growthRate] = await Promise.all([
+      safeGet(() => analyticsApi.getPatientCount({ date: today }), 0),
+      safeGet(() => analyticsApi.getRevenue({ date: today }), 0),
+      safeGet(() => appointmentApi.getAll({ status: 'SCHEDULED' }), []),
+      safeGet(() => analyticsApi.getGrowthRate(), 0),
+    ]);
+
+    return {
+      patientCount,
+      revenue,
+      pendingAppointments: Array.isArray(pendingAppointments) ? pendingAppointments.slice(0, 5) : [],
+      growthRate
+    };
   };
 
   const { data, loading, error, execute: retryFetch } = useApi(fetchDashboardData);

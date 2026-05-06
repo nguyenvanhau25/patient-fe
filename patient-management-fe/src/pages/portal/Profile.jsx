@@ -19,8 +19,8 @@ const Profile = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await patientApi.getProfile(user?.id || 'patient_123');
-      setProfile(response.data);
+      const response = await patientApi.getProfile(user?.userId || 'patient_123');
+      setProfile(response.data.data || response.data);
     } catch (err) {
       console.error('Failed to fetch profile:', err);
       setError('Lỗi kết nối. Không thể tải thông tin hồ sơ.');
@@ -37,7 +37,7 @@ const Profile = () => {
     e.preventDefault();
     setSaving(true);
     try {
-      await patientApi.updateProfile(user.id || 'patient_123', profile);
+      await patientApi.updateProfile(user?.userId || 'patient_123', profile);
       alert('Cập nhật thành công!');
     } catch (err) {
       alert('Cập nhật thất bại. Lỗi kết nối.');
@@ -71,7 +71,7 @@ const Profile = () => {
           </div>
           <div className="profile-titles">
             <h1>{profile?.fullName || 'Người dùng'}</h1>
-            <p className="status">Bệnh nhân • ID: {user?.id || 'N/A'}</p>
+            <p className="status">Bệnh nhân • ID: {user?.userId || 'N/A'}</p>
           </div>
           <button className="btn-logout" onClick={logout}><LogOut size={18} /> Đăng xuất</button>
         </div>
@@ -85,16 +85,16 @@ const Profile = () => {
               <div className="form-row grid-cols-2">
                 <div className="form-group">
                   <label><User size={14} /> Họ và Tên</label>
-                  <input type="text" value={profile?.fullName || ''} onChange={e => setProfile({...profile, fullName: e.target.value})} />
+                  <input type="text" value={profile?.fullName || ''} onChange={e => setProfile({ ...profile, fullName: e.target.value })} />
                 </div>
                 <div className="form-group">
                   <label><Calendar size={14} /> Ngày sinh</label>
-                  <input type="date" value={profile?.dateOfBirth || ''} onChange={e => setProfile({...profile, dateOfBirth: e.target.value})} />
+                  <input type="date" value={profile?.dateOfBirth || ''} onChange={e => setProfile({ ...profile, dateOfBirth: e.target.value })} />
                 </div>
               </div>
               <div className="form-group">
                 <label><MapPin size={14} /> Địa chỉ</label>
-                <input type="text" value={profile?.address || ''} onChange={e => setProfile({...profile, address: e.target.value})} />
+                <input type="text" value={profile?.address || ''} onChange={e => setProfile({ ...profile, address: e.target.value })} />
               </div>
               <button type="submit" className="btn-save" disabled={saving}>
                 {saving ? <Loader2 className="animate-spin" /> : 'Cập nhật thông tin'}

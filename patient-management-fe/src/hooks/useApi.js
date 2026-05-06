@@ -53,7 +53,7 @@ export const useApi = (apiFunc, immediate = true) => {
 
   useEffect(() => {
     if (immediate) {
-      execute();
+      execute().catch(() => {});
     }
   }, [execute, immediate]);
 

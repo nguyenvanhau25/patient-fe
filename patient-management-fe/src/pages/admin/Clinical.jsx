@@ -50,11 +50,11 @@ const Clinical = () => {
   const [patients, setPatients] = useState([]);
 
   useEffect(() => {
-    doctorApi.getAll().then(res => setDoctors(res?.data || res)).catch(console.error);
-    patientApi.getAll().then(res => setPatients(res?.data || res)).catch(console.error);
+    doctorApi.getAll().then(res => setDoctors(res?.data?.data || res?.data || [])).catch(console.error);
+    patientApi.getAll().then(res => setPatients(res?.data?.data || res?.data || [])).catch(console.error);
   }, []);
 
-  const records = recordsRaw || [];
+  const records = recordsRaw?.data || [];
   const filteredRecords = useMemo(() => {
     if (!searchTerm.trim()) return records;
     const kw = searchTerm.toLowerCase();

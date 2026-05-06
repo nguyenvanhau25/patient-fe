@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
-import { ShieldCheck, Activity, Download, ChevronRight, FileText, Pill, Loader2, ClipboardList, AlertCircle, Droplets, Thermometer, Wind, History, FileSpreadsheet, Calendar } from 'lucide-react';
+import { Activity, Download, Pill, Loader2, ClipboardList, AlertCircle, Droplets, Thermometer, Wind, History, FileSpreadsheet, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clinicalApi, pharmacyApi, patientApi } from '../../utils/api';
 import { useAuth } from '../../utils/AuthContext';
@@ -18,19 +17,45 @@ const Health = () => {
   const fetchData = async () => {
     setLoading(true);
     setError(null);
+
+    const patientId = user?.userId;
+    if (!patientId) {
+      setRecords([]);
+      setPrescriptions([]);
+      setPatientData(null);
+      setLoading(false);
+      return;
+    }
+
     try {
-      const patientId = user?.id || 'patient_123';
-      const [recRes, prescRes, patientRes] = await Promise.all([
+      const [recRes, prescRes, patientRes] = await Promise.allSettled([
         clinicalApi.getPatientRecords(patientId),
         pharmacyApi.getPatientPrescriptions(patientId),
         patientApi.getProfile(patientId)
       ]);
-      setRecords(recRes.data || []);
-      setPrescriptions(prescRes.data || []);
-      setPatientData(patientRes.data);
+
+      setRecords(
+        recRes.status === 'fulfilled'
+          ? (Array.isArray(recRes.value.data) ? recRes.value.data : (recRes.value.data?.data || []))
+          : []
+      );
+      setPrescriptions(
+        prescRes.status === 'fulfilled'
+          ? (Array.isArray(prescRes.value.data) ? prescRes.value.data : (prescRes.value.data?.data || []))
+          : []
+      );
+      setPatientData(
+        patientRes.status === 'fulfilled'
+          ? (patientRes.value.data?.data || patientRes.value.data)
+          : null
+      );
+
+      if (recRes.status === 'rejected' && prescRes.status === 'rejected' && patientRes.status === 'rejected') {
+        throw recRes.reason || prescRes.reason || patientRes.reason;
+      }
     } catch (err) {
       console.error('Failed to fetch health data:', err);
-      setError('Lỗi kết nối. Không thể tải hồ sơ.');
+      setError('Khong the tai ho so suc khoe luc nay.');
     } finally {
       setLoading(false);
     }
@@ -41,8 +66,13 @@ const Health = () => {
   }, [user]);
 
   const handleDownloadPdf = async () => {
+    if (!user?.userId) {
+      alert('Vui long dang nhap de xuat PDF.');
+      return;
+    }
+
     try {
-      const response = await patientApi.exportPdf(user.id || 'patient_123');
+      const response = await patientApi.exportPdf(user.userId);
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
@@ -50,7 +80,7 @@ const Health = () => {
       document.body.appendChild(link);
       link.click();
     } catch (err) {
-      alert('Lỗi tải PDF.');
+      alert('Loi tai PDF.');
     }
   };
 
@@ -69,45 +99,53 @@ const Health = () => {
       <div className="container py-8">
         <header className="page-header-premium mb-10 flex-between items-end">
           <div>
-            <h1 className="text-3xl font-extrabold text-primary">Hồ sơ khám</h1>
-            <p className="text-muted mt-2">Dữ liệu bệnh lý và đơn thuốc của bạn.</p>
+            <h1 className="text-3xl font-extrabold text-primary">Ho so kham</h1>
+            <p className="text-muted mt-2">Du lieu benh ly va don thuoc cua ban.</p>
           </div>
           <button className="btn-portal-primary btn-icon-text" onClick={handleDownloadPdf}>
-            <Download size={18} /> Xuất PDF
+            <Download size={18} /> Xuat PDF
           </button>
         </header>
 
         {error && (
           <div className="error-card glass p-10 flex-center flex-col text-center">
             <AlertCircle size={50} className="text-danger mb-4" />
-            <p className="font-bold text-primary mb-2">Lỗi dữ liệu</p>
+            <p className="font-bold text-primary mb-2">Loi du lieu</p>
             <p className="text-muted mb-6">{error}</p>
-            <button className="btn-portal-primary" onClick={fetchData}>Thử lại</button>
+            <button className="btn-portal-primary" onClick={fetchData}>Thu lai</button>
           </div>
         )}
 
-        {!error && (
+        {!error && !user?.userId && !loading && (
+          <div className="error-card glass p-10 flex-center flex-col text-center">
+            <AlertCircle size={50} className="text-danger mb-4" />
+            <p className="font-bold text-primary mb-2">Chua dang nhap</p>
+            <p className="text-muted mb-6">Hay dang nhap de xem ho so suc khoe cua ban.</p>
+          </div>
+        )}
+
+        {!error && user?.userId && (
           <>
             <div className="vitals-dashboard grid-cols-4 mb-10">
               <div className="vital-stat-card blue">
                 <div className="v-icon-wrap"><Activity size={20} /></div>
                 <div className="v-data">
-                  <span className="v-label">Nhịp tim</span>
+                  <span className="v-label">Nhip tim</span>
                   <span className="v-value">{patientData?.vitals?.hr || '72'} <small>bpm</small></span>
                 </div>
               </div>
               <div className="vital-stat-card red">
                 <div className="v-icon-wrap"><Droplets size={20} /></div>
                 <div className="v-data">
-                  <span className="v-label">Huyết áp</span>
+                  <span className="v-label">Huyet ap</span>
                   <span className="v-value">{patientData?.vitals?.bp || '120/80'} <small>mmHg</small></span>
                 </div>
               </div>
               <div className="vital-stat-card orange">
                 <div className="v-icon-wrap"><Thermometer size={20} /></div>
                 <div className="v-data">
-                  <span className="v-label">Nhiệt độ</span>
-                  <span className="v-value">{patientData?.vitals?.temp || '36.5'} <small>°C</small></span>
+                  <span className="v-label">Nhiet do</span>
+                  <span className="v-value">{patientData?.vitals?.temp || '36.5'} <small>C</small></span>
                 </div>
               </div>
               <div className="vital-stat-card green">
@@ -120,17 +158,17 @@ const Health = () => {
             </div>
 
             <div className="health-tabs-premium mb-8">
-              <button 
-                className={`ph-tab ${activeTab === 'records' ? 'active' : ''}`} 
+              <button
+                className={`ph-tab ${activeTab === 'records' ? 'active' : ''}`}
                 onClick={() => setActiveTab('records')}
               >
-                <ClipboardList size={18} /> Lịch sử bệnh
+                <ClipboardList size={18} /> Lich su benh
               </button>
-              <button 
-                className={`ph-tab ${activeTab === 'prescriptions' ? 'active' : ''}`} 
+              <button
+                className={`ph-tab ${activeTab === 'prescriptions' ? 'active' : ''}`}
                 onClick={() => setActiveTab('prescriptions')}
               >
-                <Pill size={18} /> Đơn thuốc
+                <Pill size={18} /> Don thuoc
               </button>
             </div>
 
@@ -138,11 +176,11 @@ const Health = () => {
               {loading ? (
                 <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-20 flex-center flex-col">
                   <Loader2 className="animate-spin text-info mb-4" size={40} />
-                  <p className="font-bold text-muted">Đang tải...</p>
+                  <p className="font-bold text-muted">Dang tai...</p>
                 </motion.div>
               ) : activeTab === 'records' ? (
-                <motion.div 
-                  key="records" 
+                <motion.div
+                  key="records"
                   variants={containerVariants}
                   initial="hidden"
                   animate="show"
@@ -157,28 +195,28 @@ const Health = () => {
                       <div className="record-main-info">
                         <div className="record-header-row">
                           <h3 className="record-title">{rec.chiefComplaint}</h3>
-                          <span className="dr-tag">BS. {rec.doctorName || 'Hậu Anh'}</span>
+                          <span className="dr-tag">BS. {rec.doctorName || 'Bac si'}</span>
                         </div>
                         <div className="record-diagnosis">
-                          <div className="label">Chẩn đoán:</div>
-                          <div className="value">{rec.diagnosis || 'Chưa có kết quả'}</div>
+                          <div className="label">Chan doan:</div>
+                          <div className="value">{rec.diagnosis || 'Chua co ket qua'}</div>
                         </div>
                       </div>
                       <button className="btn-view-results" onClick={handleDownloadPdf}>
-                        <FileSpreadsheet size={18} /> Kết quả
+                        <FileSpreadsheet size={18} /> Ket qua
                       </button>
                     </motion.div>
                   )) : (
                     <div className="empty-health-state">
                       <History size={60} />
-                      <p>Chưa có dữ liệu.</p>
-                      <button className="btn-portal-primary mt-4" onClick={() => setActiveTab('records')}>Cập nhật</button>
+                      <p>Chua co du lieu.</p>
+                      <button className="btn-portal-primary mt-4" onClick={fetchData}>Cap nhat</button>
                     </div>
                   )}
                 </motion.div>
               ) : (
-                <motion.div 
-                  key="prescriptions" 
+                <motion.div
+                  key="prescriptions"
                   variants={containerVariants}
                   initial="hidden"
                   animate="show"
@@ -189,10 +227,10 @@ const Health = () => {
                       <div className="presc-p-header">
                         <div className="p-icon-box"><Pill size={24} /></div>
                         <div className="p-header-main">
-                          <h3 className="p-title">Đơn thuốc #{presc.prescriptionId?.slice(-4) || '2910'}</h3>
-                          <span className="p-meta">Ngày kê: {new Date(presc.dateIssued).toLocaleDateString('vi-VN')}</span>
+                          <h3 className="p-title">Don thuoc #{presc.prescriptionId?.slice(-4) || '0000'}</h3>
+                          <span className="p-meta">Ngay ke: {new Date(presc.dateIssued).toLocaleDateString('vi-VN')}</span>
                         </div>
-                        <div className="p-status-tag">Dùng</div>
+                        <div className="p-status-tag">Dang dung</div>
                       </div>
                       <div className="presc-p-medicines">
                         {presc.medicines?.map((med, i) => (
@@ -206,14 +244,14 @@ const Health = () => {
                         ))}
                       </div>
                       <div className="presc-p-footer">
-                        <p className="advice">Uống sau ăn.</p>
-                        <button className="btn-p-order">Mua thuốc</button>
+                        <p className="advice">Uong sau an.</p>
+                        <button className="btn-p-order">Mua thuoc</button>
                       </div>
                     </motion.div>
                   )) : (
                     <div className="empty-health-state">
                       <Pill size={60} />
-                      <p>Chưa có đơn thuốc.</p>
+                      <p>Chua co don thuoc.</p>
                     </div>
                   )}
                 </motion.div>
