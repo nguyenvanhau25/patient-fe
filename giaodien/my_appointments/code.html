@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lịch hẹn của tôi - ClinicPortal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#cfe2f3",
+                        "tertiary-container": "#006476",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "background": "#f8f9fb",
+                        "on-tertiary-container": "#70e2ff",
+                        "outline-variant": "#c3c6d6",
+                        "on-background": "#191c1e",
+                        "inverse-primary": "#b2c5ff",
+                        "primary-fixed": "#dae2ff",
+                        "on-tertiary-fixed-variant": "#004e5d",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#edeef0",
+                        "on-primary-fixed-variant": "#0040a2",
+                        "on-secondary-fixed-variant": "#374957",
+                        "surface-dim": "#d9dadc",
+                        "on-secondary-container": "#536573",
+                        "on-primary-fixed": "#001848",
+                        "secondary-fixed-dim": "#b6c9da",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f3f4f6",
+                        "surface-bright": "#f8f9fb",
+                        "primary-container": "#0052cc",
+                        "outline": "#737685",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e1e2e4",
+                        "on-surface-variant": "#434654",
+                        "inverse-on-surface": "#f0f1f3",
+                        "secondary": "#4f606f",
+                        "tertiary-fixed": "#adecff",
+                        "tertiary-fixed-dim": "#5dd6f3",
+                        "on-primary-container": "#c4d2ff",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#0c56d0",
+                        "secondary-fixed": "#d2e5f6",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#001f26",
+                        "surface-container-high": "#e7e8ea",
+                        "on-secondary-fixed": "#0a1d2a",
+                        "primary": "#003d9b",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#004b58",
+                        "inverse-surface": "#2e3132",
+                        "on-surface": "#191c1e",
+                        "surface": "#f8f9fb",
+                        "surface-container-highest": "#e1e2e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h1": ["Manrope"],
+                        "label-caps": ["Inter"],
+                        "h2": ["Manrope"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h1": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    </style>
+</head>
+<body class="antialiased text-on-background">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-6 bg-slate-50 dark:bg-slate-950 h-screen w-64 border-r rounded-none border-slate-200 dark:border-slate-800 z-50 font-manrope text-sm font-medium">
+<div class="px-6 mb-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white">
+<span class="material-symbols-outlined">health_and_safety</span>
+</div>
+<div>
+<h1 class="text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">City Health</h1>
+<p class="text-xs text-slate-500 uppercase tracking-widest">Patient Portal</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-900 text-blue-700 dark:text-blue-400 border-l-4 border-blue-700 shadow-sm transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span>Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>Medical Records</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Billing</span>
+</a>
+</nav>
+<div class="px-4 mt-auto border-t border-slate-200 pt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen bg-background">
+<!-- Top Navigation Bar -->
+<header class="flex justify-between items-center w-full px-6 h-16 bg-white dark:bg-slate-900 docked full-width top-0 z-40 border-b border-slate-200 dark:border-slate-800 shadow-sm shadow-blue-900/5 font-manrope antialiased">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-lg focus:ring-2 focus:ring-primary-container/20 text-body-md" placeholder="Tìm kiếm lịch hẹn..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="flex items-center gap-2 pl-4 border-l border-slate-200">
+<div class="text-right hidden sm:block">
+<p class="text-body-sm font-semibold text-on-background">Nguyễn Văn A</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider">Bệnh nhân</p>
+</div>
+<img alt="Patient Profile Picture" class="w-8 h-8 rounded-full border border-slate-200" data-alt="Close-up professional portrait of a smiling middle-aged man with short dark hair in a clean office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3LNGU8JJ7EV8Tc9Xlq0hU-CqUaS0nO_NBhQ6a2Vp25BeyUUBZ4f6b7sVkltRlsacngJtBGDZi11J2i2zdB0A-lvU-VBumWh8andDiml8b2HsIBlchEiTKD-9Rl3rAWWoY7ZQhCBiLC0jRPwzBzQ4pOzTLlHdpmMeHiq8cajP8yNbLs3CPA-mtIKQbyepl62gNvVAKchzmJsturO6A1NfwsM_eOXfQZ1HrbEsINg78n_0Vgx58_npXJm7jJ7lcOtjjdd8aQhfHcLll"/>
+</div>
+</div>
+</header>
+<div class="p-margin max-w-[1440px] mx-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-xl">
+<div>
+<nav class="flex items-center gap-2 text-body-sm text-slate-500 mb-2">
+<span>Trang chủ</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-medium">Lịch hẹn của tôi</span>
+</nav>
+<h2 class="font-h1 text-h1 text-on-background">Lịch hẹn của tôi</h2>
+</div>
+<button class="bg-primary text-white px-6 py-2.5 rounded-lg flex items-center gap-2 font-medium hover:bg-primary/90 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Đặt lịch hẹn mới</span>
+</button>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Filters & Stats (Asymmetric Sidebar Layout) -->
+<div class="lg:col-span-3 space-y-lg">
+<div class="bg-white p-lg rounded-lg border border-outline-variant shadow-[0_4px_12px_rgba(0,61,155,0.04)]">
+<h3 class="font-h3 text-body-lg mb-md text-on-background">Bộ lọc</h3>
+<div class="space-y-md">
+<div>
+<label class="font-label-caps text-slate-500 block mb-xs uppercase">Trạng thái</label>
+<select class="w-full border-slate-200 rounded-lg text-body-md focus:ring-primary/20">
+<option>Tất cả trạng thái</option>
+<option>Đã xác nhận</option>
+<option>Đang chờ</option>
+<option>Đã hủy</option>
+</select>
+</div>
+<div>
+<label class="font-label-caps text-slate-500 block mb-xs uppercase">Chuyên khoa</label>
+<select class="w-full border-slate-200 rounded-lg text-body-md focus:ring-primary/20">
+<option>Tất cả chuyên khoa</option>
+<option>Nội tổng quát</option>
+<option>Nhi khoa</option>
+<option>Tim mạch</option>
+</select>
+</div>
+</div>
+</div>
+<div class="bg-primary text-white p-lg rounded-lg shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-h3 text-body-lg mb-xs">Cần hỗ trợ?</h3>
+<p class="text-body-sm text-white/80 mb-md">Vui lòng liên hệ hotline nếu bạn gặp khó khăn khi đặt lịch.</p>
+<p class="text-h3 font-bold">1900 1234</p>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-white/10 text-[120px]">support_agent</span>
+</div>
+</div>
+<!-- Main Appointment List -->
+<div class="lg:col-span-9 space-y-lg">
+<!-- Upcoming Section -->
+<section>
+<div class="flex items-center gap-3 mb-md">
+<h3 class="font-h3 text-h3 text-on-background">Lịch hẹn sắp tới</h3>
+<span class="bg-primary-fixed text-on-primary-fixed text-xs font-bold px-2 py-0.5 rounded-full">2 Lịch hẹn</span>
+</div>
+<!-- Appointment Card 1 -->
+<div class="bg-white border-l-4 border-primary rounded-lg shadow-[0_4px_12px_rgba(0,61,155,0.04)] mb-md overflow-hidden transition-all hover:shadow-md">
+<div class="p-lg flex flex-col md:flex-row items-start md:items-center gap-lg">
+<div class="w-16 h-16 rounded-xl bg-surface-container flex items-center justify-center flex-shrink-0">
+<img alt="Doctor Profile" class="w-14 h-14 rounded-lg object-cover" data-alt="Professional headshot of a female doctor in a white lab coat with a stethoscope around her neck" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL0BPoEX9AdOZleZ8HfZenGdc3_m1Ct7dXQG71TriOzZ1YNahnkXzsyMSt2s0Cx8ALKrp8xi1HpAc165UEaj108YbmcXj6yKGBcs0ln2qgw7ShoXyvIGdwPbky5x-EEGKd6UAMVN_rIaqIRUkPeulP0V8z6bJVU2dMoJoSN-sY7o_olr4ThdQGOEKzmcHjnQuJoVzJNI7SN0aX0RGWmFxMPuUC0heEw02ouCHjZeY5Bs7GcxYqm1hardKMpf9oCLa1vMXX4REKp5w2"/>
+</div>
+<div class="flex-1">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="text-h3 font-semibold text-on-background">BS. Lê Minh Tâm</h4>
+<p class="text-body-md text-slate-500">Chuyên khoa: Nội tổng quát</p>
+</div>
+<span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-green-50 text-green-700 text-xs font-bold border border-green-100">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                            Đã xác nhận
+                                        </span>
+</div>
+<div class="mt-md flex flex-wrap gap-xl">
+<div class="flex items-center gap-2 text-body-md text-slate-600">
+<span class="material-symbols-outlined text-primary text-[20px]">calendar_today</span>
+<span>Thứ Tư, 24 Tháng 10, 2023</span>
+</div>
+<div class="flex items-center gap-2 text-body-md text-slate-600">
+<span class="material-symbols-outlined text-primary text-[20px]">schedule</span>
+<span>09:30 - 10:00</span>
+</div>
+</div>
+</div>
+<div class="flex flex-row md:flex-col gap-sm w-full md:w-auto">
+<button class="flex-1 px-4 py-2 bg-primary-container text-white rounded-lg text-body-sm font-semibold hover:bg-primary transition-colors">Đổi lịch</button>
+<button class="flex-1 px-4 py-2 border border-error text-error rounded-lg text-body-sm font-semibold hover:bg-error/5 transition-colors">Hủy lịch</button>
+</div>
+</div>
+</div>
+<!-- Appointment Card 2 -->
+<div class="bg-white border-l-4 border-amber-500 rounded-lg shadow-[0_4px_12px_rgba(0,61,155,0.04)] mb-md overflow-hidden transition-all hover:shadow-md">
+<div class="p-lg flex flex-col md:flex-row items-start md:items-center gap-lg">
+<div class="w-16 h-16 rounded-xl bg-surface-container flex items-center justify-center flex-shrink-0">
+<img alt="Doctor Profile" class="w-14 h-14 rounded-lg object-cover" data-alt="Close-up of a friendly male doctor in clinical attire against a blurred hospital background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb2gnwiwp6gGpu_wiyTpoFsSxGjwxXFmsUs_df81G4pgnHoyjeTJGB7XOS5jpWzZu9UjqawlnjXXwMrIPXtuYtkCv-KsU9E9-oQZMMicOc16JfLfdmbiSdPRcDeTicyQXCcRTkU9-DLf6b6H_tJDf4tSKcRxhE80qV1a-4KoAYqXCTyCoZ0nim9cVmxTMpwd_7Sf4DY7gUg4sb-YnP0q1l5-i391yhpGOCjKe-I26YKdPDtXL0Mp0H7fcQqUsJC4QtmSjhzK5f7NOQ"/>
+</div>
+<div class="flex-1">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="text-h3 font-semibold text-on-background">BS. Nguyễn Hoàng Nam</h4>
+<p class="text-body-md text-slate-500">Chuyên khoa: Răng Hàm Mặt</p>
+</div>
+<span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-amber-50 text-amber-700 text-xs font-bold border border-amber-100">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                            Đang chờ
+                                        </span>
+</div>
+<div class="mt-md flex flex-wrap gap-xl">
+<div class="flex items-center gap-2 text-body-md text-slate-600">
+<span class="material-symbols-outlined text-primary text-[20px]">calendar_today</span>
+<span>Thứ Sáu, 27 Tháng 10, 2023</span>
+</div>
+<div class="flex items-center gap-2 text-body-md text-slate-600">
+<span class="material-symbols-outlined text-primary text-[20px]">schedule</span>
+<span>14:00 - 14:30</span>
+</div>
+</div>
+</div>
+<div class="flex flex-row md:flex-col gap-sm w-full md:w-auto">
+<button class="flex-1 px-4 py-2 bg-primary-container text-white rounded-lg text-body-sm font-semibold hover:bg-primary transition-colors">Đổi lịch</button>
+<button class="flex-1 px-4 py-2 border border-error text-error rounded-lg text-body-sm font-semibold hover:bg-error/5 transition-colors">Hủy lịch</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Past Appointments Section -->
+<section class="mt-xl">
+<div class="flex items-center gap-3 mb-md">
+<h3 class="font-h3 text-h3 text-on-background">Lịch sử khám bệnh</h3>
+</div>
+<div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+<table class="w-full text-left">
+<thead class="bg-slate-50 border-b-2 border-primary-container/20">
+<tr>
+<th class="px-lg py-md font-label-caps text-slate-500 uppercase tracking-wider">Bác sĩ / Chuyên khoa</th>
+<th class="px-lg py-md font-label-caps text-slate-500 uppercase tracking-wider">Ngày khám</th>
+<th class="px-lg py-md font-label-caps text-slate-500 uppercase tracking-wider">Trạng thái</th>
+<th class="px-lg py-md font-label-caps text-slate-500 uppercase tracking-wider text-right">Hành động</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-lg py-md">
+<p class="font-semibold text-on-background">BS. Trần Thị Tuyết</p>
+<p class="text-body-sm text-slate-500">Da liễu</p>
+</td>
+<td class="px-lg py-md text-body-md text-slate-600">12/09/2023</td>
+<td class="px-lg py-md">
+<span class="inline-flex items-center py-0.5 px-2.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-bold">Hoàn thành</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="text-primary hover:underline text-body-sm font-medium">Xem kết quả</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-lg py-md">
+<p class="font-semibold text-on-background">BS. Phạm Gia Bảo</p>
+<p class="text-body-sm text-slate-500">Mắt</p>
+</td>
+<td class="px-lg py-md text-body-md text-slate-600">05/08/2023</td>
+<td class="px-lg py-md">
+<span class="inline-flex items-center py-0.5 px-2.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-bold">Hoàn thành</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="text-primary hover:underline text-body-sm font-medium">Xem kết quả</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-lg py-md">
+<p class="font-semibold text-on-background">BS. Đặng Văn Quý</p>
+<p class="text-body-sm text-slate-500">Tim mạch</p>
+</td>
+<td class="px-lg py-md text-body-md text-slate-600">20/07/2023</td>
+<td class="px-lg py-md">
+<span class="inline-flex items-center py-0.5 px-2.5 rounded-full bg-error-container text-on-error-container text-[11px] font-bold">Đã hủy</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="text-slate-400 cursor-not-allowed text-body-sm font-medium">Không khả dụng</button>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="p-md bg-slate-50/50 flex justify-between items-center">
+<p class="text-body-sm text-slate-500">Hiển thị 3 trên 12 lịch khám cũ</p>
+<button class="text-body-sm font-semibold text-primary-container flex items-center gap-1">
+                                    Xem tất cả lịch sử
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB - Restricted to Dashboard/Main screens -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-white rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">calendar_add_on</span>
+</button>
+</body></html>

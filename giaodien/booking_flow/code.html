@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đặt lịch khám - ClinicPortal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9fb;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#cfe2f3",
+                        "tertiary-container": "#006476",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "background": "#f8f9fb",
+                        "on-tertiary-container": "#70e2ff",
+                        "outline-variant": "#c3c6d6",
+                        "on-background": "#191c1e",
+                        "inverse-primary": "#b2c5ff",
+                        "primary-fixed": "#dae2ff",
+                        "on-tertiary-fixed-variant": "#004e5d",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#edeef0",
+                        "on-primary-fixed-variant": "#0040a2",
+                        "on-secondary-fixed-variant": "#374957",
+                        "surface-dim": "#d9dadc",
+                        "on-secondary-container": "#536573",
+                        "on-primary-fixed": "#001848",
+                        "secondary-fixed-dim": "#b6c9da",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f3f4f6",
+                        "surface-bright": "#f8f9fb",
+                        "primary-container": "#0052cc",
+                        "outline": "#737685",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e1e2e4",
+                        "on-surface-variant": "#434654",
+                        "inverse-on-surface": "#f0f1f3",
+                        "secondary": "#4f606f",
+                        "tertiary-fixed": "#adecff",
+                        "tertiary-fixed-dim": "#5dd6f3",
+                        "on-primary-container": "#c4d2ff",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#0c56d0",
+                        "secondary-fixed": "#d2e5f6",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#001f26",
+                        "surface-container-high": "#e7e8ea",
+                        "on-secondary-fixed": "#0a1d2a",
+                        "primary": "#003d9b",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#004b58",
+                        "inverse-surface": "#2e3132",
+                        "on-surface": "#191c1e",
+                        "surface": "#f8f9fb",
+                        "surface-container-highest": "#e1e2e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h1": ["Manrope"],
+                        "label-caps": ["Inter"],
+                        "h2": ["Manrope"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h1": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-body-md text-on-surface">
+<nav class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm shadow-blue-900/5 fixed top-0 z-40 w-full px-6 h-16 flex justify-between items-center font-manrope antialiased">
+<div class="flex items-center gap-6">
+<span class="text-xl font-bold text-blue-700 dark:text-blue-400">ClinicPortal</span>
+<div class="hidden md:flex items-center gap-4">
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 cursor-pointer active:opacity-80 transition-colors duration-200 py-2">Dashboard</a>
+<a class="text-blue-700 dark:text-blue-400 font-semibold border-b-2 border-blue-700 cursor-pointer active:opacity-80 transition-colors duration-200 py-2">Appointments</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 cursor-pointer active:opacity-80 transition-colors duration-200 py-2">Medical Records</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-slate-200">
+<img alt="Patient Profile Picture" data-alt="close up professional headshot of a friendly young man with neutral background for a healthcare profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAa2PdB42wxCa1Yta6BOixvvHro9Ym7BdE-dt6AaSzLUMBJCCH2Sr3yiPLuTp6BFtC-UpVP7LnPum7Gvl50Mh6c7U3Lr__N21TBf4Cb-PSsx60G2CH5ssVwNto8Xbv-AiNXg4QvxFe5WTjSu4xKvl0Yz-DLq7FWSimfd-4k8N3ShbUef_q9_m9RZusF2gsmLYv07KjzpaUzEl6buxt9QX01MEIjc2KYlBMlEy0on1n5gBGZlxVxba2FzaE9TRyyOkotvdlNf9qkk1G5"/>
+</div>
+</div>
+</nav>
+<div class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex flex-col py-6 z-30 hidden md:flex">
+<div class="px-6 mb-8">
+<h2 class="text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">City Health</h2>
+<p class="text-xs text-slate-500 font-medium">Patient Portal</p>
+</div>
+<div class="flex-1 px-3 space-y-1">
+<div class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg cursor-pointer transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-manrope text-sm font-medium">Dashboard</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 bg-white dark:bg-slate-900 text-blue-700 dark:text-blue-400 border-l-4 border-blue-700 shadow-sm rounded-r-lg cursor-pointer transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-manrope text-sm font-medium">Appointments</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg cursor-pointer transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-manrope text-sm font-medium">Medical Records</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg cursor-pointer transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-manrope text-sm font-medium">Billing</span>
+</div>
+</div>
+<div class="px-3 border-t border-slate-200 pt-4 space-y-1">
+<div class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg cursor-pointer transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-manrope text-sm font-medium">Settings</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg cursor-pointer transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-manrope text-sm font-medium">Logout</span>
+</div>
+</div>
+</div>
+<main class="md:ml-64 mt-16 p-lg">
+<div class="max-w-[1200px] mx-auto">
+<header class="mb-xl">
+<div class="flex items-center gap-2 text-slate-500 mb-2">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_back">arrow_back</span>
+<span class="text-body-sm">Quay lại danh sách bác sĩ</span>
+</div>
+<h1 class="font-h1 text-h1 text-on-surface">Đặt lịch khám</h1>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<div class="lg:col-span-8 space-y-lg">
+<section class="bg-white border border-outline-variant rounded-xl p-lg shadow-sm">
+<h3 class="font-h3 text-h3 mb-md">Bác sĩ điều trị</h3>
+<div class="flex items-center gap-lg">
+<div class="w-24 h-24 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img alt="Doctor Avatar" data-alt="portrait of a professional male doctor in his 40s wearing a white lab coat with a stethoscope around his neck, clean medical office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMIzwnIKPOTR0HfQzbKjLVp3lQ7lrErr_wmY1K67woPRJjYNlX350qcxkCkJteQ_DgRIAWrgjf_YANeiH99OL2vo8l3SFk_C2iT1vkEQKpr3HkdsuQsSR4FFyQTmxVJCPCDRuQgzPC-nKoABT4NtyUc87Sjh2eo4HgwUz_sGB9tO1_lHlfuPiH1-LTZFLDLD5-RQRQkq8lSobNTgaY1i8j2Wd37GoJ3FOC3ynR7I2uRKUipqjVb97_ezPJf7kjfg7UqxVpFBJYG6nX"/>
+</div>
+<div>
+<h4 class="font-h2 text-h2 text-primary">BS. Lê Minh Tâm</h4>
+<p class="text-body-lg text-secondary mb-xs">Chuyên khoa Nội Tổng quát</p>
+<div class="flex items-center gap-sm">
+<div class="flex items-center text-amber-500">
+<span class="material-symbols-outlined fill text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined fill text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined fill text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined fill text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" data-icon="star">star</span>
+</div>
+<span class="text-body-sm text-slate-500">(120 đánh giá)</span>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-white border border-outline-variant rounded-xl p-lg shadow-sm">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-h3 text-h3">Chọn ngày &amp; giờ khám</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div>
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-caps text-secondary uppercase">Tháng 10, 2023</span>
+<div class="flex gap-2">
+<button class="p-1 hover:bg-slate-100 rounded"><span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span></button>
+<button class="p-1 hover:bg-slate-100 rounded"><span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span></button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center mb-sm">
+<div class="text-body-sm font-bold text-slate-400">T2</div>
+<div class="text-body-sm font-bold text-slate-400">T3</div>
+<div class="text-body-sm font-bold text-slate-400">T4</div>
+<div class="text-body-sm font-bold text-slate-400">T5</div>
+<div class="text-body-sm font-bold text-slate-400">T6</div>
+<div class="text-body-sm font-bold text-slate-400">T7</div>
+<div class="text-body-sm font-bold text-slate-400">CN</div>
+<div class="p-2 text-slate-300">28</div>
+<div class="p-2 text-slate-300">29</div>
+<div class="p-2 text-slate-300">30</div>
+<button class="p-2 hover:bg-blue-50 rounded-lg">1</button>
+<button class="p-2 hover:bg-blue-50 rounded-lg">2</button>
+<button class="p-2 hover:bg-blue-50 rounded-lg">3</button>
+<button class="p-2 hover:bg-blue-50 rounded-lg">4</button>
+<button class="p-2 hover:bg-blue-50 rounded-lg">5</button>
+<button class="p-2 hover:bg-blue-50 rounded-lg">6</button>
+<button class="p-2 bg-primary text-white rounded-lg shadow-md font-bold">7</button>
+<button class="p-2 hover:bg-blue-50 rounded-lg">8</button>
+<button class="p-2 hover:bg-blue-50 rounded-lg">9</button>
+<button class="p-2 hover:bg-blue-50 rounded-lg">10</button>
+<button class="p-2 hover:bg-blue-50 rounded-lg">11</button>
+</div>
+</div>
+<div>
+<h4 class="font-label-caps text-secondary uppercase mb-sm">Khung giờ trống</h4>
+<div class="grid grid-cols-3 gap-2">
+<button class="py-2 px-3 border border-outline-variant rounded-lg text-body-sm hover:border-primary hover:text-primary transition-all">08:00</button>
+<button class="py-2 px-3 border border-outline-variant rounded-lg text-body-sm hover:border-primary hover:text-primary transition-all">08:30</button>
+<button class="py-2 px-3 border border-primary bg-primary text-white rounded-lg text-body-sm shadow-sm font-semibold">09:00</button>
+<button class="py-2 px-3 border border-outline-variant rounded-lg text-body-sm hover:border-primary hover:text-primary transition-all">09:30</button>
+<button class="py-2 px-3 border border-outline-variant rounded-lg text-body-sm hover:border-primary hover:text-primary transition-all">10:00</button>
+<button class="py-2 px-3 border border-outline-variant rounded-lg text-body-sm hover:border-primary hover:text-primary transition-all">10:30</button>
+<button class="py-2 px-3 border border-outline-variant rounded-lg text-body-sm hover:border-primary hover:text-primary transition-all">14:00</button>
+<button class="py-2 px-3 border border-outline-variant rounded-lg text-body-sm hover:border-primary hover:text-primary transition-all">14:30</button>
+<button class="py-2 px-3 border border-outline-variant rounded-lg text-body-sm hover:border-primary hover:text-primary transition-all">15:00</button>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-white border border-outline-variant rounded-xl p-lg shadow-sm">
+<h3 class="font-h3 text-h3 mb-md">Thông tin bổ sung</h3>
+<div class="space-y-md">
+<div>
+<label class="block text-body-sm font-bold text-slate-700 mb-1">Lý do khám (Tùy chọn)</label>
+<textarea class="w-full border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary-container focus:border-primary outline-none transition-all placeholder:text-slate-400" placeholder="VD: Đau họng, sốt nhẹ..." rows="3"></textarea>
+</div>
+<div class="flex items-center gap-3">
+<input class="w-4 h-4 text-primary border-outline-variant rounded focus:ring-primary" id="urgent" type="checkbox"/>
+<label class="text-body-md text-slate-700" for="urgent">Tôi cần khám gấp (Ưu tiên nếu có thể)</label>
+</div>
+</div>
+</section>
+</div>
+<div class="lg:col-span-4">
+<div class="bg-white border border-outline-variant rounded-xl shadow-md sticky top-24 overflow-hidden">
+<div class="bg-primary text-white p-lg">
+<h3 class="font-h3 text-h3">Tóm tắt lịch đặt</h3>
+</div>
+<div class="p-lg space-y-md">
+<div class="flex justify-between items-start">
+<span class="text-slate-500 text-body-sm">Bác sĩ:</span>
+<span class="font-semibold text-right">BS. Lê Minh Tâm</span>
+</div>
+<div class="flex justify-between items-start">
+<span class="text-slate-500 text-body-sm">Dịch vụ:</span>
+<span class="font-semibold text-right">Khám Nội Tổng quát</span>
+</div>
+<div class="flex justify-between items-start">
+<span class="text-slate-500 text-body-sm">Thời gian:</span>
+<span class="font-semibold text-right">09:00 - Thứ 7, 07/10/2023</span>
+</div>
+<hr class="border-slate-100"/>
+<div class="flex justify-between items-center text-lg font-bold">
+<span>Phí tạm tính:</span>
+<span class="text-primary">300.000 VNĐ</span>
+</div>
+<div class="pt-md">
+<button class="w-full bg-primary hover:bg-primary-container text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 transition-all active:scale-[0.98] mb-md">
+                                    Xác nhận đặt lịch
+                                </button>
+<p class="text-[10px] text-center text-slate-400 leading-relaxed">
+                                    Bằng cách xác nhận, bạn đồng ý với các Điều khoản &amp; Chính sách bảo mật của ClinicPortal.
+                                </p>
+</div>
+</div>
+<div class="bg-slate-50 p-md flex items-start gap-2 border-t border-slate-100">
+<span class="material-symbols-outlined text-amber-500 text-sm" data-icon="info">info</span>
+<p class="text-[11px] text-slate-600">Bạn có thể hủy hoặc dời lịch khám trước ít nhất 24 giờ mà không mất phí.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex justify-around items-center h-16 px-6 z-50">
+<button class="flex flex-col items-center text-slate-400">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[10px]">Trang chủ</span>
+</button>
+<button class="flex flex-col items-center text-blue-700">
+<span class="material-symbols-outlined" data-icon="calendar_month" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="text-[10px] font-bold">Đặt lịch</span>
+</button>
+<button class="flex flex-col items-center text-slate-400">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="text-[10px]">Lịch sử</span>
+</button>
+<button class="flex flex-col items-center text-slate-400">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px]">Cá nhân</span>
+</button>
+</div>
+</body></html>

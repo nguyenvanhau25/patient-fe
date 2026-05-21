@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#cfe2f3",
+                    "tertiary-container": "#006476",
+                    "primary-fixed-dim": "#b2c5ff",
+                    "background": "#f8f9fb",
+                    "on-tertiary-container": "#70e2ff",
+                    "outline-variant": "#c3c6d6",
+                    "on-background": "#191c1e",
+                    "inverse-primary": "#b2c5ff",
+                    "primary-fixed": "#dae2ff",
+                    "on-tertiary-fixed-variant": "#004e5d",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#edeef0",
+                    "on-primary-fixed-variant": "#0040a2",
+                    "on-secondary-fixed-variant": "#374957",
+                    "surface-dim": "#d9dadc",
+                    "on-secondary-container": "#536573",
+                    "on-primary-fixed": "#001848",
+                    "secondary-fixed-dim": "#b6c9da",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f3f4f6",
+                    "surface-bright": "#f8f9fb",
+                    "primary-container": "#0052cc",
+                    "outline": "#737685",
+                    "on-primary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#e1e2e4",
+                    "on-surface-variant": "#434654",
+                    "inverse-on-surface": "#f0f1f3",
+                    "secondary": "#4f606f",
+                    "tertiary-fixed": "#adecff",
+                    "tertiary-fixed-dim": "#5dd6f3",
+                    "on-primary-container": "#c4d2ff",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#0c56d0",
+                    "secondary-fixed": "#d2e5f6",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#001f26",
+                    "surface-container-high": "#e7e8ea",
+                    "on-secondary-fixed": "#0a1d2a",
+                    "primary": "#003d9b",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#004b58",
+                    "inverse-surface": "#2e3132",
+                    "on-surface": "#191c1e",
+                    "surface": "#f8f9fb",
+                    "surface-container-highest": "#e1e2e4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin": "32px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "h3": ["Manrope"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "h1": ["Manrope"],
+                    "label-caps": ["Inter"],
+                    "h2": ["Manrope"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-sm": ["12px", {"lineHeight": "18px", "letterSpacing": "0", "fontWeight": "400"}],
+                    "h1": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f8f9fb;
+        }
+        .tonal-shadow {
+            box-shadow: 0 4px 12px rgba(0, 61, 155, 0.04);
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopNavBar -->
+<nav class="bg-white fixed top-0 z-40 border-b border-slate-200 shadow-sm shadow-blue-900/5 flex justify-between items-center w-full px-6 h-16">
+<div class="flex items-center gap-8">
+<span class="font-h3 text-xl font-bold text-blue-700">ClinicPortal</span>
+<div class="hidden md:flex items-center space-x-6 h-full">
+<a class="text-slate-600 hover:text-blue-600 h-full flex items-center px-1" href="#">Tổng quan</a>
+<a class="text-slate-600 hover:text-blue-600 h-full flex items-center px-1" href="#">Lịch hẹn</a>
+<a class="text-blue-700 font-semibold border-b-2 border-blue-700 h-full flex items-center px-1" href="#">Hồ sơ cá nhân</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors cursor-pointer active:opacity-80">notifications</button>
+<button class="material-symbols-outlined p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors cursor-pointer active:opacity-80">help</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-slate-200">
+<img alt="Patient Profile Picture" class="w-full h-full object-cover" data-alt="professional portrait of a middle-aged Asian man with a friendly smile, clean studio lighting, soft blurred background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDXd7xt4zMBegBVS7OIREjz9nfJHGTTAoFoqD3IeUtSoYH4uqh67zor0NGk1QcoQk245OCihloj6aJQuwZEDWeCX_-LGDebdBAz9hIqxu3EBAflLvxsn1Q9ZdU4_Cp208XSiMj4Go8x-GxG96-vnymfCcAYSzrhYvm-_m8IHeAdwm0UuItYtxm34nk8s41N5PYuY1aUfOrqroKdBQRNvNMD6q37743R7XV7LGL48WDXtSMZEjAw1wMB9IhxnZ7m92UIcWhLr9Tb1s3"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-6 bg-slate-50 border-r border-slate-200 w-64 mt-16 hidden lg:flex">
+<div class="px-6 mb-8">
+<h2 class="font-h2 text-lg font-extrabold tracking-tight text-slate-900">City Health</h2>
+<p class="text-body-sm text-slate-500">Patient Portal</p>
+</div>
+<div class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:bg-slate-100 transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:bg-slate-100 transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-body-md font-medium">Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-white text-blue-700 border-l-4 border-blue-700 shadow-sm transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-body-md font-medium">Medical Records</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:bg-slate-100 transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-body-md font-medium">Billing</span>
+</a>
+</div>
+<div class="px-4 border-t border-slate-200 pt-6 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:bg-slate-100 transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 hover:bg-slate-100 transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-body-md font-medium">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 mt-16 p-lg lg:p-xl">
+<div class="max-w-5xl mx-auto">
+<!-- Page Header -->
+<div class="mb-xl">
+<h1 class="font-h1 text-h1 text-on-surface">Hồ sơ cá nhân</h1>
+<p class="font-body-md text-slate-500 mt-xs">Quản lý thông tin cá nhân và tài chính của bạn</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- Left Column: Profile Card & Actions -->
+<div class="lg:col-span-4 space-y-lg">
+<!-- Avatar Card -->
+<div class="bg-white border border-slate-200 rounded-xl p-lg tonal-shadow flex flex-col items-center text-center">
+<div class="relative group cursor-pointer">
+<div class="w-32 h-32 rounded-full overflow-hidden border-4 border-slate-50 shadow-inner">
+<img alt="Patient Profile Picture" class="w-full h-full object-cover" data-alt="professional headshot of an Asian man with glasses, neutral expression, medical clinic background blur" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXKiAxJsPiNv1GzLo3YHDwYp2QPMuCs9_gkyvRmuDdyR0MaAnCSOxgnkV7SZMrUiLRCH4ONzHZ0W8ZN-aSnomAUjtT7Qhc7aw8OWYkW4Sznz6SNFzMsktOq2kReY5mKf-NcjTbTEX82s6voxl9J6uQerZTlzk-b_ullkjpRCT0lVMCipF2zITTO7VP2NDWt3V0nFKGXpgtBtbAmI4eiLS65A5jtb-uhx_C2S2Xaiu8Pp_xrkvnk-9cPmc6llPiTBcrrH42yNTHjGzZ"/>
+</div>
+<div class="absolute bottom-1 right-1 bg-blue-700 text-white p-2 rounded-full shadow-lg hover:bg-blue-800 transition-colors">
+<span class="material-symbols-outlined text-sm">photo_camera</span>
+</div>
+</div>
+<h3 class="font-h3 text-h3 mt-md text-on-surface">Nguyen Van A</h3>
+<p class="font-body-sm text-slate-500 mb-md">ID Bệnh nhân: #99283-A</p>
+<button class="w-full py-2.5 px-4 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium rounded-lg border border-slate-200 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-md">edit</span>
+                            Thay đổi ảnh đại diện
+                        </button>
+</div>
+<!-- Balance Card -->
+<div class="bg-white border border-slate-200 rounded-xl p-lg tonal-shadow">
+<div class="flex justify-between items-start mb-md">
+<h3 class="font-h3 text-h3">Số dư tài khoản</h3>
+<span class="material-symbols-outlined text-blue-700">account_balance_wallet</span>
+</div>
+<div class="bg-blue-50/50 p-md rounded-lg border border-blue-100">
+<p class="font-label-caps text-slate-500 mb-xs">Số dư khả dụng</p>
+<p class="font-h1 text-blue-800">2,450,000 ₫</p>
+</div>
+<div class="mt-md space-y-sm">
+<button class="w-full py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg shadow-sm transition-all active:scale-[0.99]">
+                                Nạp tiền vào ví
+                            </button>
+<button class="w-full py-2 text-slate-600 font-medium hover:text-blue-700 transition-colors text-sm">
+                                Xem lịch sử giao dịch
+                            </button>
+</div>
+</div>
+</div>
+<!-- Right Column: Personal Information Form -->
+<div class="lg:col-span-8 space-y-lg">
+<!-- Personal Info Card -->
+<div class="bg-white border border-slate-200 rounded-xl tonal-shadow overflow-hidden">
+<div class="p-lg border-b border-slate-100 flex justify-between items-center">
+<h3 class="font-h3 text-h3">Thông tin chi tiết</h3>
+<button class="text-blue-700 font-semibold text-sm hover:underline">Chỉnh sửa</button>
+</div>
+<div class="p-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="space-y-base">
+<label class="font-label-caps text-slate-500 uppercase">Họ và tên</label>
+<input class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-on-surface focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" readonly="" type="text" value="Nguyen Van A"/>
+</div>
+<div class="space-y-base">
+<label class="font-label-caps text-slate-500 uppercase">Ngày sinh</label>
+<div class="relative">
+<input class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-on-surface focus:outline-none" readonly="" type="text" value="12/05/1988"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">calendar_month</span>
+</div>
+</div>
+<div class="space-y-base">
+<label class="font-label-caps text-slate-500 uppercase">Giới tính</label>
+<select class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-on-surface focus:outline-none appearance-none" disabled="">
+<option selected="">Nam</option>
+<option>Nữ</option>
+<option>Khác</option>
+</select>
+</div>
+<div class="space-y-base">
+<label class="font-label-caps text-slate-500 uppercase">Số điện thoại</label>
+<input class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-on-surface focus:outline-none" readonly="" type="tel" value="090 123 4567"/>
+</div>
+<div class="md:col-span-2 space-y-base">
+<label class="font-label-caps text-slate-500 uppercase">Địa chỉ thường trú</label>
+<div class="relative">
+<textarea class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-on-surface focus:outline-none resize-none h-20" readonly="">123 Đường Lê Lợi, Phường Bến Thành, Quận 1, TP. Hồ Chí Minh</textarea>
+<span class="material-symbols-outlined absolute right-3 top-3 text-slate-400">location_on</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Medical Quick Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="bg-white border border-slate-200 p-md rounded-xl tonal-shadow flex flex-col justify-between">
+<p class="font-label-caps text-slate-500">Nhóm máu</p>
+<div class="flex items-center justify-between mt-sm">
+<span class="font-h2 text-error">O+</span>
+<span class="material-symbols-outlined text-slate-300">bloodtype</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 p-md rounded-xl tonal-shadow flex flex-col justify-between">
+<p class="font-label-caps text-slate-500">Chiều cao / Cân nặng</p>
+<div class="flex items-center justify-between mt-sm">
+<span class="font-h2 text-slate-900">175cm / 70kg</span>
+<span class="material-symbols-outlined text-slate-300">straighten</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 p-md rounded-xl tonal-shadow flex flex-col justify-between">
+<p class="font-label-caps text-slate-500">Lịch hẹn sắp tới</p>
+<div class="flex items-center justify-between mt-sm">
+<span class="font-h2 text-blue-700">15 Th08</span>
+<span class="material-symbols-outlined text-slate-300" style="font-variation-settings: 'FILL' 1;">event</span>
+</div>
+</div>
+</div>
+<!-- Security Settings -->
+<div class="bg-white border border-slate-200 rounded-xl tonal-shadow overflow-hidden">
+<div class="p-lg border-b border-slate-100">
+<h3 class="font-h3 text-h3">Bảo mật &amp; Tài khoản</h3>
+</div>
+<div class="divide-y divide-slate-100">
+<div class="p-lg flex justify-between items-center hover:bg-slate-50 transition-colors cursor-pointer group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-slate-400 p-2 bg-slate-100 rounded-lg group-hover:text-blue-700 transition-colors">lock</span>
+<div>
+<p class="font-body-md font-semibold">Mật khẩu</p>
+<p class="text-body-sm text-slate-500">Cập nhật mật khẩu thường xuyên để bảo mật</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+<div class="p-lg flex justify-between items-center hover:bg-slate-50 transition-colors cursor-pointer group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-slate-400 p-2 bg-slate-100 rounded-lg group-hover:text-blue-700 transition-colors">verified_user</span>
+<div>
+<p class="font-body-md font-semibold">Xác thực 2 lớp (2FA)</p>
+<p class="text-body-sm text-slate-500">Đang tắt</p>
+</div>
+</div>
+<div class="w-10 h-6 bg-slate-200 rounded-full relative transition-colors cursor-pointer">
+<div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex justify-around items-center h-16 z-50 px-4">
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium">Trang chủ</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-[10px] font-medium">Lịch hẹn</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-blue-700">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-[10px] font-bold">Cá nhân</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">more_horiz</span>
+<span class="text-[10px] font-medium">Thêm</span>
+</button>
+</nav>
+</body></html>

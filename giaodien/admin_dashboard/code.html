@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MedCare Clinical - Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#4f606f",
+                        "inverse-on-surface": "#f0f1f3",
+                        "surface-container-high": "#e7e8ea",
+                        "background": "#f8f9fb",
+                        "on-secondary-fixed-variant": "#374957",
+                        "surface-dim": "#d9dadc",
+                        "on-primary-fixed-variant": "#0040a2",
+                        "tertiary": "#004b58",
+                        "surface": "#f8f9fb",
+                        "on-secondary-container": "#536573",
+                        "primary-container": "#0052cc",
+                        "surface-tint": "#0c56d0",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#edeef0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f8f9fb",
+                        "outline": "#737685",
+                        "on-tertiary-fixed-variant": "#004e5d",
+                        "tertiary-fixed-dim": "#5dd6f3",
+                        "inverse-surface": "#2e3132",
+                        "inverse-primary": "#b2c5ff",
+                        "tertiary-container": "#006476",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c3c6d6",
+                        "on-tertiary-fixed": "#001f26",
+                        "on-primary-container": "#c4d2ff",
+                        "surface-container-highest": "#e1e2e4",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "on-primary-fixed": "#001848",
+                        "secondary-fixed": "#d2e5f6",
+                        "surface-variant": "#e1e2e4",
+                        "primary-fixed": "#dae2ff",
+                        "on-secondary-fixed": "#0a1d2a",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#adecff",
+                        "surface-container-low": "#f3f4f6",
+                        "secondary-fixed-dim": "#b6c9da",
+                        "on-surface": "#191c1e",
+                        "primary": "#003d9b",
+                        "on-background": "#191c1e",
+                        "on-tertiary-container": "#70e2ff",
+                        "on-surface-variant": "#434654",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#cfe2f3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "margin": "32px",
+                        "base": "4px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Manrope"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Manrope"],
+                        "h2": ["Manrope"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9fb;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface antialiased">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 border-r border-slate-200 bg-slate-50 flex flex-col py-6 px-4 space-y-2 z-50">
+<div class="flex items-center px-2 mb-8 space-x-3">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+</div>
+<div>
+<h1 class="text-lg font-extrabold text-blue-800 tracking-tight">HealthCenter</h1>
+<p class="text-xs text-slate-500 font-medium">Primary Care Unit</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col space-y-2">
+<!-- Active State: Dashboard -->
+<a class="flex items-center px-4 py-3 bg-white text-blue-700 border-l-4 border-blue-700 shadow-sm transition-all duration-300 ease-in-out font-medium rounded-r-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 hover:bg-slate-100 hover:pl-5 transition-all duration-300 ease-in-out font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="person_filled">person_filled</span>
+<span>Patients</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 hover:bg-slate-100 hover:pl-5 transition-all duration-300 ease-in-out font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="medical_services">medical_services</span>
+<span>Doctors</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 hover:bg-slate-100 hover:pl-5 transition-all duration-300 ease-in-out font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="payments">payments</span>
+<span>Billing</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 hover:bg-slate-100 hover:pl-5 transition-all duration-300 ease-in-out font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="medication">medication</span>
+<span>Pharmacy</span>
+</a>
+</nav>
+<div class="pt-6 mt-6 border-t border-slate-200">
+<button class="w-full py-3 px-4 bg-primary text-on-primary rounded-xl font-bold flex items-center justify-center space-x-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span>New Appointment</span>
+</button>
+</div>
+<div class="mt-auto space-y-1">
+<a class="flex items-center px-4 py-2 text-slate-600 hover:bg-slate-100 font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="help">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center px-4 py-2 text-error hover:bg-error-container font-medium" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 bg-white border-b border-slate-200 z-40 shadow-sm shadow-blue-900/5 h-16 flex justify-between items-center px-6">
+<div class="flex items-center w-1/2">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-primary/20 transition-all font-body-md text-sm" placeholder="Tìm kiếm bệnh nhân, hồ sơ..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full relative transition-colors duration-200 cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors duration-200 cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 mx-2"></div>
+<div class="flex items-center space-x-3 cursor-pointer">
+<div class="text-right">
+<p class="text-sm font-bold text-slate-900 leading-none">Dr. Minh Tran</p>
+<p class="text-[10px] text-slate-500 font-medium uppercase tracking-wider mt-1">Medical Practitioner</p>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover" data-alt="Close-up portrait of a professional male doctor in a white lab coat with a warm and confident expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdnWTDS6pDO1Q7j9HeOiO6zQazBHojlmfxOnFug5g3daxwCAB7SaGUPBndCqsN2FxZhMLGCA7hiaAGakA1XHpDS_9ihPh98p-yy4FqhR_mDHrpm-0KINFrxs2TkW0BtNWZ_vfZtWx8gWRrSOtcymXwM2icsHYCv9ESFxY21Kh0A5I20LUmHCE-ns1fFPbQtOYfacghgkADrIDr_pp3LBhviqcg8SjU_weFN6IY2sDbKrf51SXZV9wj-3Bm8ceBzIRzM0SSJPCtUpHB"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 mt-16 p-gutter">
+<div class="max-w-[1440px] mx-auto">
+<!-- Quick Stats Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-lg">
+<!-- Total Patients -->
+<div class="bg-white p-lg rounded-xl border border-slate-200 shadow-sm shadow-blue-900/5 group hover:border-primary transition-colors duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-blue-50 text-primary rounded-xl group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</div>
+<span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">+12% vs tháng trước</span>
+</div>
+<p class="font-label-caps text-slate-500 uppercase">Tổng bệnh nhân</p>
+<h2 class="font-h2 text-slate-900 mt-1">12,482</h2>
+</div>
+<!-- Today's Revenue -->
+<div class="bg-white p-lg rounded-xl border border-slate-200 shadow-sm shadow-blue-900/5 group hover:border-primary transition-colors duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-full">Hôm nay</span>
+</div>
+<p class="font-label-caps text-slate-500 uppercase">Doanh thu hôm nay</p>
+<h2 class="font-h2 text-slate-900 mt-1">45.200.000đ</h2>
+</div>
+<!-- Appointments Pending -->
+<div class="bg-white p-lg rounded-xl border border-slate-200 shadow-sm shadow-blue-900/5 group hover:border-primary transition-colors duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-amber-50 text-amber-600 rounded-xl group-hover:bg-amber-600 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="calendar_clock">calendar_clock</span>
+</div>
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-white object-cover" data-alt="profile photo of a woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIA6PCWpb5VJPh9FwHK63JwKdb69Q-cXCN0rB8CyfJWBqT7dQ2kvkyrW03h6EeqFw8BPXD1ytEjko-OTQuJZgthLE_hlAxBQrk6EFkDo6XCRe1QUh_Sc4vkyA5XS08aRm0D4InrZpO_h5fKEN6EUZNei1Y7u1tU6SHCeVvf8qGF2uoGKMpzoF-bCk4TyI7VHXuA8nveiuM8mgnugPMxSHps1yLKj9buP9EAzfkrW-LZVZtTHUm5H65pgwqoJxlm3ESYBROMalo_bkE"/>
+<img class="w-6 h-6 rounded-full border-2 border-white object-cover" data-alt="profile photo of a man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJE74ncmareyb2jwSEcx1R_V8sJJruoVdGTxh79aXy29p6At62ltFE4bY4YmoSTRgjUEENPK0qX-UCaSDWtgZv3bsw4pp9gtJ3n0q5NokX3Rz3zduEW6AzxMZ-HnpgDobYMB4BxOG2DqMlq93DX88q_RgJJC1_CP6GQAqexomheizm26j1-HqFew7zwSDcb8_hOcQlAanjQc-gTX1TJtgPMgjFx5wDFoeTL6SZraX4y68EPGnOjCBePdbhuriRt3kd-czgs0Eoblej"/>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold">+5</div>
+</div>
+</div>
+<p class="font-label-caps text-slate-500 uppercase">Lịch hẹn chờ xác nhận</p>
+<h2 class="font-h2 text-slate-900 mt-1">18</h2>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-lg mb-lg">
+<!-- Patient Growth (Line Chart Representation) -->
+<div class="bg-white p-lg rounded-xl border border-slate-200 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-h3 text-slate-900">Tăng trưởng bệnh nhân</h3>
+<div class="flex space-x-2">
+<button class="text-xs font-bold px-3 py-1 bg-slate-100 rounded-lg text-slate-600">Tháng này</button>
+<button class="text-xs font-bold px-3 py-1 hover:bg-slate-50 rounded-lg text-slate-400">Năm nay</button>
+</div>
+</div>
+<div class="relative h-64 w-full bg-slate-50/50 rounded-lg overflow-hidden flex flex-col justify-end">
+<!-- Simulated Chart Path -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 400 200">
+<path d="M0,180 Q50,160 100,120 T200,140 T300,60 T400,20" fill="none" stroke="#003d9b" stroke-linecap="round" stroke-width="3"></path>
+<path d="M0,180 Q50,160 100,120 T200,140 T300,60 T400,20 V200 H0 Z" fill="url(#grad1)" opacity="0.1"></path>
+<defs>
+<lineargradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#003d9b;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#003d9b;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+<!-- Hover point -->
+<circle cx="300" cy="60" fill="#003d9b" r="4"></circle>
+<line stroke="#003d9b" stroke-dasharray="4" stroke-width="1" x1="300" x2="300" y1="60" y2="200"></line>
+</svg>
+<div class="flex justify-between px-2 py-4 border-t border-slate-100">
+<span class="text-[10px] text-slate-400 font-bold uppercase">Jan</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">Feb</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">Mar</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">Apr</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">May</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">Jun</span>
+</div>
+</div>
+</div>
+<!-- Monthly Revenue (Bar Chart Representation) -->
+<div class="bg-white p-lg rounded-xl border border-slate-200 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-h3 text-slate-900">Doanh thu theo tháng</h3>
+<div class="flex items-center space-x-2 text-primary font-bold text-xs cursor-pointer">
+<span>Báo cáo chi tiết</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<div class="flex items-end justify-between h-64 w-full bg-slate-50/50 rounded-lg p-6 pb-2">
+<div class="w-8 bg-primary/20 rounded-t-sm h-[40%] transition-all hover:bg-primary/40"></div>
+<div class="w-8 bg-primary/20 rounded-t-sm h-[60%] transition-all hover:bg-primary/40"></div>
+<div class="w-8 bg-primary/20 rounded-t-sm h-[35%] transition-all hover:bg-primary/40"></div>
+<div class="w-8 bg-primary/20 rounded-t-sm h-[85%] transition-all hover:bg-primary/40"></div>
+<div class="w-8 bg-primary rounded-t-sm h-[75%] shadow-lg shadow-primary/20"></div>
+<div class="w-8 bg-primary/20 rounded-t-sm h-[55%] transition-all hover:bg-primary/40"></div>
+<div class="w-8 bg-primary/20 rounded-t-sm h-[65%] transition-all hover:bg-primary/40"></div>
+</div>
+<div class="flex justify-between px-6 pt-4">
+<span class="text-[10px] text-slate-400 font-bold uppercase">T2</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">T3</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">T4</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">T5</span>
+<span class="text-[10px] text-primary font-bold uppercase">T6</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">T7</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">T8</span>
+</div>
+</div>
+</div>
+<!-- Recent Appointments Table -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+<div class="px-lg py-md flex justify-between items-center border-b border-slate-100">
+<h3 class="font-h3 text-slate-900">Lịch hẹn gần đây</h3>
+<button class="text-sm font-semibold text-primary hover:underline">Xem tất cả</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50">
+<tr>
+<th class="px-lg py-4 font-label-caps text-slate-500 uppercase border-b-2 border-primary">Bệnh nhân</th>
+<th class="px-lg py-4 font-label-caps text-slate-500 uppercase border-b border-slate-200">Dịch vụ</th>
+<th class="px-lg py-4 font-label-caps text-slate-500 uppercase border-b border-slate-200">Thời gian</th>
+<th class="px-lg py-4 font-label-caps text-slate-500 uppercase border-b border-slate-200">Bác sĩ</th>
+<th class="px-lg py-4 font-label-caps text-slate-500 uppercase border-b border-slate-200">Trạng thái</th>
+<th class="px-lg py-4 font-label-caps text-slate-500 uppercase border-b border-slate-200">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="group hover:bg-slate-50/50 transition-colors">
+<td class="px-lg py-4 border-l-4 border-primary">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold text-xs">NL</div>
+<div>
+<p class="font-bold text-slate-900 text-sm">Nguyễn Lan</p>
+<p class="text-[10px] text-slate-500">ID: #PT-8821</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 text-sm font-medium text-slate-600">Khám tổng quát</td>
+<td class="px-lg py-4 text-sm text-slate-500">09:00, 24/05/2024</td>
+<td class="px-lg py-4 text-sm font-medium text-slate-700">Dr. Minh Tran</td>
+<td class="px-lg py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-50 text-green-700">
+                                        Confirmed
+                                    </span>
+</td>
+<td class="px-lg py-4">
+<button class="p-2 hover:bg-white rounded-lg transition-colors border border-transparent hover:border-slate-200">
+<span class="material-symbols-outlined text-slate-400" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50/50 transition-colors">
+<td class="px-lg py-4 border-l-4 border-amber-400">
+<div class="flex items-center space-x-3">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="headshot of middle-aged man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC19p9oVWUZJgGLpJKyhfNolvNhxIDkUcAUl7sReYSrLkC38gDCC5knU9NBdbTfq4cSWZHRyAAm342oSPMQhUpHBhAhLKUmyDCSxAkm_oneqlB9GsXJGgqb6fE2czjyUdwDf990ptEzs1IuTowHJ_qAASBE2v4QZGsUWI4ZgKZlOwfVqivM3h4mPB2nq26LdUuIbgG_HzgkgeZjspQZH7niGMPOQ8_APBmbeQsdjHqJHO5CIDAnNv_SjFzajWDRDs70onbH33Q_wsxw"/>
+<div>
+<p class="font-bold text-slate-900 text-sm">Lê Hoàng Nam</p>
+<p class="text-[10px] text-slate-500">ID: #PT-8822</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 text-sm font-medium text-slate-600">Chụp X-Quang</td>
+<td class="px-lg py-4 text-sm text-slate-500">10:30, 24/05/2024</td>
+<td class="px-lg py-4 text-sm font-medium text-slate-700">Dr. Sarah Le</td>
+<td class="px-lg py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700">
+                                        Pending
+                                    </span>
+</td>
+<td class="px-lg py-4">
+<button class="p-2 hover:bg-white rounded-lg transition-colors border border-transparent hover:border-slate-200">
+<span class="material-symbols-outlined text-slate-400" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50/50 transition-colors">
+<td class="px-lg py-4 border-l-4 border-primary">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 font-bold text-xs">PV</div>
+<div>
+<p class="font-bold text-slate-900 text-sm">Phạm Văn Bình</p>
+<p class="text-[10px] text-slate-500">ID: #PT-8823</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 text-sm font-medium text-slate-600">Xét nghiệm máu</td>
+<td class="px-lg py-4 text-sm text-slate-500">11:15, 24/05/2024</td>
+<td class="px-lg py-4 text-sm font-medium text-slate-700">Dr. Minh Tran</td>
+<td class="px-lg py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-50 text-green-700">
+                                        Confirmed
+                                    </span>
+</td>
+<td class="px-lg py-4">
+<button class="p-2 hover:bg-white rounded-lg transition-colors border border-transparent hover:border-slate-200">
+<span class="material-symbols-outlined text-slate-400" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50/50 transition-colors">
+<td class="px-lg py-4 border-l-4 border-amber-400">
+<div class="flex items-center space-x-3">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="professional young woman headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyN7ktJYtOXHSVvu971oWIfrA2uly1jifIvdUoEZMYfMofScY_hR2Uh3F5iLNxtg8Y_KcwwnKpbebr-fzGG4WRpJIrGkSClms03xFryApSGLl3TAJ7ypY8aEnKDMC15T92zoV8exE2dpq_AfaqD0IV1jS5GLXteHUsy9vCl_kEQ74XLhssdL0tevEKXIe0k8UovxJYBj76gaS4BMawb_j1DI-I5JR5Tge1GkC2YCBrIyGdBQbOUOw4jrSXAsF_fjS7aOXkW6VaaP4N"/>
+<div>
+<p class="font-bold text-slate-900 text-sm">Trần Thùy Chi</p>
+<p class="text-[10px] text-slate-500">ID: #PT-8824</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 text-sm font-medium text-slate-600">Tư vấn tâm lý</td>
+<td class="px-lg py-4 text-sm text-slate-500">14:00, 24/05/2024</td>
+<td class="px-lg py-4 text-sm font-medium text-slate-700">Dr. Vu Hoang</td>
+<td class="px-lg py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700">
+                                        Pending
+                                    </span>
+</td>
+<td class="px-lg py-4">
+<button class="p-2 hover:bg-white rounded-lg transition-colors border border-transparent hover:border-slate-200">
+<span class="material-symbols-outlined text-slate-400" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50/50 transition-colors">
+<td class="px-lg py-4 border-l-4 border-primary">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold text-xs">QD</div>
+<div>
+<p class="font-bold text-slate-900 text-sm">Quách Đạt</p>
+<p class="text-[10px] text-slate-500">ID: #PT-8825</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 text-sm font-medium text-slate-600">Khám Răng</td>
+<td class="px-lg py-4 text-sm text-slate-500">15:45, 24/05/2024</td>
+<td class="px-lg py-4 text-sm font-medium text-slate-700">Dr. Sarah Le</td>
+<td class="px-lg py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-50 text-green-700">
+                                        Confirmed
+                                    </span>
+</td>
+<td class="px-lg py-4">
+<button class="p-2 hover:bg-white rounded-lg transition-colors border border-transparent hover:border-slate-200">
+<span class="material-symbols-outlined text-slate-400" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</body></html>

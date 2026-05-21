@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#4f606f",
+                        "inverse-on-surface": "#f0f1f3",
+                        "surface-container-high": "#e7e8ea",
+                        "background": "#f8f9fb",
+                        "on-secondary-fixed-variant": "#374957",
+                        "surface-dim": "#d9dadc",
+                        "on-primary-fixed-variant": "#0040a2",
+                        "tertiary": "#004b58",
+                        "surface": "#f8f9fb",
+                        "on-secondary-container": "#536573",
+                        "primary-container": "#0052cc",
+                        "surface-tint": "#0c56d0",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#edeef0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f8f9fb",
+                        "outline": "#737685",
+                        "on-tertiary-fixed-variant": "#004e5d",
+                        "tertiary-fixed-dim": "#5dd6f3",
+                        "inverse-surface": "#2e3132",
+                        "inverse-primary": "#b2c5ff",
+                        "tertiary-container": "#006476",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c3c6d6",
+                        "on-tertiary-fixed": "#001f26",
+                        "on-primary-container": "#c4d2ff",
+                        "surface-container-highest": "#e1e2e4",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "on-primary-fixed": "#001848",
+                        "secondary-fixed": "#d2e5f6",
+                        "surface-variant": "#e1e2e4",
+                        "primary-fixed": "#dae2ff",
+                        "on-secondary-fixed": "#0a1d2a",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#adecff",
+                        "surface-container-low": "#f3f4f6",
+                        "secondary-fixed-dim": "#b6c9da",
+                        "on-surface": "#191c1e",
+                        "primary": "#003d9b",
+                        "on-background": "#191c1e",
+                        "on-tertiary-container": "#70e2ff",
+                        "on-surface-variant": "#434654",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#cfe2f3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "margin": "32px",
+                        "base": "4px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Manrope"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Manrope"],
+                        "h2": ["Manrope"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9fb;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-background selection:bg-primary-container selection:text-on-primary-container">
+<aside class="fixed left-0 top-0 h-screen w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex flex-col h-full py-6 px-4 space-y-2 z-50">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+</div>
+<div>
+<h2 class="text-lg font-extrabold text-blue-800 dark:text-blue-300 leading-tight">HealthCenter</h2>
+<p class="text-xs text-slate-500">Primary Care Unit</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:pl-5 transition-all duration-300 ease-in-out font-manrope text-sm font-medium" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:pl-5 transition-all duration-300 ease-in-out font-manrope text-sm font-medium" href="#">
+<span class="material-symbols-outlined">person_filled</span>
+                Patients
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 bg-white dark:bg-slate-900 text-blue-700 dark:text-blue-400 border-l-4 border-blue-700 shadow-sm transition-all duration-300 ease-in-out font-manrope text-sm font-medium" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+                Doctors
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:pl-5 transition-all duration-300 ease-in-out font-manrope text-sm font-medium" href="#">
+<span class="material-symbols-outlined">payments</span>
+                Billing
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:pl-5 transition-all duration-300 ease-in-out font-manrope text-sm font-medium" href="#">
+<span class="material-symbols-outlined">medication</span>
+                Pharmacy
+            </a>
+</nav>
+<div class="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-1">
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-on-primary py-2.5 rounded-lg font-semibold text-sm mb-4 scale-95 active:scale-100 transition-transform">
+<span class="material-symbols-outlined text-sm">add</span>
+                New Appointment
+            </button>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:pl-5 transition-all duration-300 ease-in-out font-manrope text-sm font-medium" href="#">
+<span class="material-symbols-outlined">help</span>
+                Help Center
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:pl-5 transition-all duration-300 ease-in-out font-manrope text-sm font-medium" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<main class="ml-64 min-h-screen flex flex-col">
+<header class="sticky top-0 z-40 w-full h-16 px-6 flex justify-between items-center bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm shadow-blue-900/5">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-lg focus:ring-2 focus:ring-blue-700/20 text-sm font-body-md transition-all" placeholder="Tìm kiếm bác sĩ, chuyên khoa..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-lg transition-colors cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-lg transition-colors cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-px bg-slate-200 mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="text-right">
+<p class="text-sm font-semibold text-slate-900">Dr. Nguyen An</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider">Medical Practitioner</p>
+</div>
+<img alt="Medical Practitioner Profile" class="w-10 h-10 rounded-full object-cover ring-2 ring-blue-700/10 group-hover:ring-blue-700/30 transition-all" data-alt="professional portrait of a male doctor in his 40s wearing a white clinical coat and stethoscope, warm studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAicx3rESfihDFapwVEjhfHuq1tq4KAx-yI6J87a_PICnR8B8zUyVRaNIX1gQze_bfixMBgOVNR-JZh5zt4G46-ERR7H1QLdRgpcwf0EvynC-N-PjxC6xYWersVOvGkjqsVv98LCSCKrUmiS3HowPKJNab1wMAJ4RdTtHvgMjIK4pG7jukkVYU6J6unpj3QhnfEXuvcxY_RhxqUYMFKUi_o7plHlALYXCrlenVwSiN7eIJI9Bz14kTvEzK8ZilmH1T7PKFGpKZ7hGqh"/>
+</div>
+</div>
+</header>
+<section class="p-gutter max-w-[1440px] w-full mx-auto">
+<div class="mb-xl">
+<h1 class="font-h1 text-h1 text-on-surface mb-2">Danh sách Bác sĩ</h1>
+<p class="font-body-md text-secondary">Tìm kiếm và đặt lịch hẹn với các chuyên gia y tế hàng đầu.</p>
+</div>
+<div class="flex flex-wrap items-center gap-sm mb-lg">
+<button class="px-md py-2 rounded-full bg-primary text-on-primary font-body-md shadow-sm">Tất cả</button>
+<button class="px-md py-2 rounded-full bg-white border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-colors font-body-md">Nội khoa</button>
+<button class="px-md py-2 rounded-full bg-white border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-colors font-body-md">Ngoại khoa</button>
+<button class="px-md py-2 rounded-full bg-white border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-colors font-body-md">Nhi khoa</button>
+<button class="px-md py-2 rounded-full bg-white border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-colors font-body-md">Sản phụ khoa</button>
+<button class="px-md py-2 rounded-full bg-white border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-colors font-body-md">Da liễu</button>
+<button class="px-md py-2 rounded-full bg-white border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-colors font-body-md">Tim mạch</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-[0_4px_12px_rgba(0,61,155,0.04)] group hover:shadow-[0_8px_24px_rgba(0,61,155,0.08)] transition-all flex flex-col">
+<div class="relative h-56 w-full">
+<img alt="Doctor 1" class="w-full h-full object-cover" data-alt="Female doctor smiling in clinical setting, wearing white lab coat and stethoscope, clean medical background with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHB9ol2ALISMKzJnAiW6bjvVhhdB88iVLU-J47z5fv8bkIgdOH7rb7G7MgxE91lfPsq6ZhkAFoYUZjGXjBGaBVXXj1kRLa3lTxxJAWSLOb3DpR5tCdJo_gr9UNKSdFkJkGhWBpXBFer3-B7Dj8JXV8XBs3QvkQ3ES0QFjC01Zd6BssEWm4TbHksxD6yOsS-BbXavcnb-OWM2UXmySqqNp8aiOOEJbDVD9Ym4jG2rO4wnmnDVBM-YJUYLQ-VZhInuu08lfPiAwBIZYS"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1.5 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-[10px] font-bold text-slate-700 uppercase tracking-tight">Online</span>
+</div>
+</div>
+<div class="p-lg flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">BS. Trần Thu Hà</h3>
+<p class="text-body-sm text-secondary font-medium">Chuyên khoa Nhi</p>
+</div>
+<div class="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-amber-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-amber-700">4.9</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Kinh nghiệm: 12 năm</span>
+</div>
+<div class="mt-2 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>Phòng khám B - Tầng 2</span>
+</div>
+<div class="mt-auto pt-lg">
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm active:scale-95">Đặt lịch ngay</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-[0_4px_12px_rgba(0,61,155,0.04)] group hover:shadow-[0_8px_24px_rgba(0,61,155,0.08)] transition-all flex flex-col">
+<div class="relative h-56 w-full">
+<img alt="Doctor 2" class="w-full h-full object-cover" data-alt="Male doctor with glasses smiling, white clinical background, professional atmosphere, natural daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTAN6tHHsBALbuu3XZZEhnV_GoqcfwndO-_mcokCBuKKvg1yvgEcBAqhrt4piSTHVrObUuP27n0Nk8ks7XGWcVP2WAjwLNtpAhTkmAV4Xt3CyJZqJKgV_-pg4gBfLkepzUN561Y5hJBtjTt-OQY79ogwgHXG9Vauxp4AUQpr0tsxLOlzCzpzlPixQTXON83vI3yp1d1WRcBBtu0JoXYBDQU2D2LrZKwzpmXdeZvpPRGRD1_RnBTyrM5JpE9EW4T693axLcbRiF_YnA"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1.5 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-slate-400"></span>
+<span class="text-[10px] font-bold text-slate-700 uppercase tracking-tight">Offline</span>
+</div>
+</div>
+<div class="p-lg flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">BS. Lê Minh Tâm</h3>
+<p class="text-body-sm text-secondary font-medium">Chuyên khoa Nội</p>
+</div>
+<div class="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-amber-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-amber-700">4.8</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Kinh nghiệm: 8 năm</span>
+</div>
+<div class="mt-2 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>Phòng khám A - Tầng 1</span>
+</div>
+<div class="mt-auto pt-lg">
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm active:scale-95">Đặt lịch ngay</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-[0_4px_12px_rgba(0,61,155,0.04)] group hover:shadow-[0_8px_24px_rgba(0,61,155,0.08)] transition-all flex flex-col">
+<div class="relative h-56 w-full">
+<img alt="Doctor 3" class="w-full h-full object-cover" data-alt="Asian female physician in uniform, confident posture, modern hospital interior background, high-end medical style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGOUO58BWN3-Z-IF553wr6bwWwcbBr2G5BE_VK-7Q20AlyeKHNlMdQNJPpwKBsaMGP48u3yxXxFEVzajuHF70OdMcAS-ev3f9Wakr1rcgHycziPbVoz2GUp5nGuzFvw-ncssniIIvI6aPIbt5Isr3SWGQP4-0vGrkp7YkNW1d3Lql7WW0wDl9x1ggNi_p96JytEBTuXgwfkUqePgwK90Wjm_nH9-BHHN42PgVoKh5XNuLuyexsapppdeQn7b90vCs-N8amCFDcWbyE"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1.5 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-[10px] font-bold text-slate-700 uppercase tracking-tight">Online</span>
+</div>
+</div>
+<div class="p-lg flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">BS. Đặng Hoàng Nam</h3>
+<p class="text-body-sm text-secondary font-medium">Chuyên khoa Tim mạch</p>
+</div>
+<div class="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-amber-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-amber-700">5.0</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Kinh nghiệm: 15 năm</span>
+</div>
+<div class="mt-2 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>TT Tim mạch - Tầng 5</span>
+</div>
+<div class="mt-auto pt-lg">
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm active:scale-95">Đặt lịch ngay</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-[0_4px_12px_rgba(0,61,155,0.04)] group hover:shadow-[0_8px_24px_rgba(0,61,155,0.08)] transition-all flex flex-col">
+<div class="relative h-56 w-full">
+<img alt="Doctor 4" class="w-full h-full object-cover" data-alt="Professional doctor portrait, white lab coat, blurred medical office background, soft bokeh" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfM0ge1M2apIBNGCXSvyZ9VBrxUwEJHcBAU2hWsqutHfMohbrCgr5jhTTdWNp-bH1N-VpnbVOKXiseFOEgEMZabo9XdIKOqtm3TobC2nAL9n2eDH8wNqnKB6kYv3XBinxnGg5qBGyeHbel6jNr4R9kkswmlmMnwnLj4LJ2zZ9QhcbiWQMUE2CyxE1TwuGytM9TeRQMTTl-AZa03FjqyfghcQ9xrRe0wMokZrXztiqBRTklwyn7Q4eZKhqw6VhoB8QXUsDzPvoeqVEm"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1.5 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-[10px] font-bold text-slate-700 uppercase tracking-tight">Online</span>
+</div>
+</div>
+<div class="p-lg flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">BS. Nguyễn Bảo Anh</h3>
+<p class="text-body-sm text-secondary font-medium">Sản phụ khoa</p>
+</div>
+<div class="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-amber-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-amber-700">4.7</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Kinh nghiệm: 10 năm</span>
+</div>
+<div class="mt-2 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>Khu Phụ sản - Tầng 3</span>
+</div>
+<div class="mt-auto pt-lg">
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm active:scale-95">Đặt lịch ngay</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-[0_4px_12px_rgba(0,61,155,0.04)] group hover:shadow-[0_8px_24px_rgba(0,61,155,0.08)] transition-all flex flex-col">
+<div class="relative h-56 w-full">
+<img alt="Doctor 5" class="w-full h-full object-cover" data-alt="Male physician smiling, professional attire, modern minimalist hospital hallway, clean bright lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4enoGlLmYYjUzkfWr04NmZ4k8XLTeJ-htaRnPy04jiAqySSfJva6GwnpmiIbNJP9Tzvk_gAn-JNZX0fDykYtVk68IPeRjdDvJOePGRzffvUVN_x9B-fp0lZ1PR49zhVkoMKjgb2H9wpU9Bdo_yPX8guehrl9WFg71viw6lu8RvGx7A_UPBhROB0YadWwXV9G-GYqIdpy7dUUMhwgBz7YRGCZ5-zs3ucWuQjggH9EhdW1aZa765lnb1volTI-6TQhXx1JP7G7jG5ti"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1.5 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-slate-400"></span>
+<span class="text-[10px] font-bold text-slate-700 uppercase tracking-tight">Offline</span>
+</div>
+</div>
+<div class="p-lg flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">BS. Phạm Gia Bảo</h3>
+<p class="text-body-sm text-secondary font-medium">Chuyên khoa Ngoại</p>
+</div>
+<div class="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-amber-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-amber-700">4.9</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Kinh nghiệm: 20 năm</span>
+</div>
+<div class="mt-2 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>Khu Phẫu thuật - Tầng 4</span>
+</div>
+<div class="mt-auto pt-lg">
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm active:scale-95">Đặt lịch ngay</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-[0_4px_12px_rgba(0,61,155,0.04)] group hover:shadow-[0_8px_24px_rgba(0,61,155,0.08)] transition-all flex flex-col">
+<div class="relative h-56 w-full">
+<img alt="Doctor 6" class="w-full h-full object-cover" data-alt="Young female doctor in white coat, holding a digital tablet, modern healthcare office with natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbbmycB7Sy4LQdF2DZZpriSVwgKTWayduXSgcASJwPaLf4sjI7sdzExpbRrqyfcoE4YnCrYNjgJqJAh46h9v-Bm9JrI92wgT1wgRvikq9OakQi98aLHkvBBqcQyre1vQB75koN6_hvPcFKp1VyYX8XrKZgn_tQeTEeZpLCMnLeP64mIuguGYVcaPmb-JeeCbPiu_s1Gt00gCjAVxJSESrbeonhxi0xcCDvLd5BJhiPZtJAOBZLdWEoMIev6LJ0h80u39tltWAiH_pl"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1.5 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-[10px] font-bold text-slate-700 uppercase tracking-tight">Online</span>
+</div>
+</div>
+<div class="p-lg flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">BS. Lê Tú Anh</h3>
+<p class="text-body-sm text-secondary font-medium">Chuyên khoa Da liễu</p>
+</div>
+<div class="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-amber-500 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-amber-700">4.6</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Kinh nghiệm: 6 năm</span>
+</div>
+<div class="mt-2 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>TT Thẩm mỹ - Tầng 6</span>
+</div>
+<div class="mt-auto pt-lg">
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm active:scale-95">Đặt lịch ngay</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

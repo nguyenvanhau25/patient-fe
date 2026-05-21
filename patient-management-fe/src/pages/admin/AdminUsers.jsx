@@ -3,15 +3,20 @@ import { Search, Filter, MoreVertical, Shield, ShieldAlert, ShieldCheck, UserPlu
 import { motion } from 'framer-motion';
 import { authApi } from '../../utils/api';
 import { useApi } from '../../hooks/useApi';
+import { useAuth } from '../../utils/AuthContext';
 import { LoadingState } from '../../components/ui/LoadingState';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { Badge } from '../../components/ui/Badge';
 import './AdminUsers.css';
 
 const AdminUsers = () => {
-  const { data: usersRaw, loading, error, execute: fetchUsers } = useApi(() => authApi.getAllUsers());
+  const { user } = useAuth();
+  const { data: usersRaw, loading, error, execute: fetchUsers } = useApi(
+    () => authApi.getAllUsers(),
+    true
+  );
 
-  const users = usersRaw || [];
+  const users = Array.isArray(usersRaw) ? usersRaw : (usersRaw?.data || []);
 
   const getRoleIcon = (role) => {
     if (role?.includes('ADMIN')) return <ShieldAlert size={14} />;
@@ -19,12 +24,23 @@ const AdminUsers = () => {
     return <Shield size={14} />;
   };
 
+  const getRoleBadgeClass = (role) => {
+    if (role?.includes('ADMIN')) return 'role-admin';
+    if (role?.includes('DOCTOR')) return 'role-doctor';
+    return 'role-user';
+  };
+
+  // Hiển thị lỗi 403 thân thiện hơn
+  const friendlyError = error?.includes('403') || error?.includes('Forbidden')
+    ? 'Bạn không có quyền xem danh sách người dùng. Chỉ tài khoản ADMIN mới có quyền này.'
+    : error;
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="users-container container mt-4">
       <div className="flex-between m-b-2">
         <div>
           <h1>Quản lý Hệ thống & User</h1>
-          <p className="text-muted">Quản lý tài khoản, phân quyền và trạng thái truy cập (Port 4004 Gateway).</p>
+          <p className="text-muted">Quản lý tài khoản, phân quyền và trạng thái truy cập.</p>
         </div>
         <button className="btn-primary">
           <UserPlus size={18} /> <span>Thêm User mới</span>
@@ -44,8 +60,16 @@ const AdminUsers = () => {
 
         {loading ? (
           <div className="p-8"><LoadingState message="Đang tải danh sách người dùng..." /></div>
-        ) : error ? (
-          <div className="p-8"><EmptyState isError title="Lỗi tải người dùng" message={error} onAction={fetchUsers} actionLabel="Thử lại" /></div>
+        ) : friendlyError ? (
+          <div className="p-8">
+            <EmptyState
+              isError
+              title="Không thể tải dữ liệu"
+              message={friendlyError}
+              onAction={fetchUsers}
+              actionLabel="Thử lại"
+            />
+          </div>
         ) : users.length === 0 ? (
           <div className="p-8"><EmptyState title="Trống" message="Chưa có người dùng nào trong hệ thống." /></div>
         ) : (
@@ -60,23 +84,23 @@ const AdminUsers = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr key={user.id} className="border-b border-slate-100">
+                {users.map((u) => (
+                  <tr key={u.id} className="border-b border-slate-100">
                     <td className="px-6 py-4">
                       <div className="user-info-cell flex items-center gap-3">
                         <div className="user-avatar w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-500">
-                          {user.fullName?.charAt(0) || user.email?.charAt(0)}
+                          {(u.fullName || u.email || 'U').charAt(0).toUpperCase()}
                         </div>
                         <div>
-                          <div className="name font-bold text-slate-800">{user.fullName || 'N/A'}</div>
-                          <div className="email text-sm text-slate-500">{user.email}</div>
+                          <div className="name font-bold text-slate-800">{u.fullName || 'N/A'}</div>
+                          <div className="email text-sm text-slate-500">{u.email}</div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="role-tag flex items-center gap-1.5 px-2 py-1 bg-slate-50 rounded-md text-sm text-slate-600 w-fit">
-                        {getRoleIcon(user.role)}
-                        {user.role}
+                      <div className={`badge-role ${getRoleBadgeClass(u.role)} flex items-center gap-1.5 px-2 py-1 rounded-md text-sm w-fit`}>
+                        {getRoleIcon(u.role)}
+                        {u.role || 'USER'}
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -85,7 +109,9 @@ const AdminUsers = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button className="btn-icon p-2 hover:bg-slate-100 rounded-lg transition-colors"><MoreVertical size={18} /></button>
+                      <button className="btn-icon p-2 hover:bg-slate-100 rounded-lg transition-colors">
+                        <MoreVertical size={18} />
+                      </button>
                     </td>
                   </tr>
                 ))}

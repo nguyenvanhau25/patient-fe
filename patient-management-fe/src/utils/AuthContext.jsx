@@ -1,6 +1,5 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { authApi } from '../utils/api';
+import { authApi, patientApi } from '../utils/api';
 
 const AuthContext = createContext();
 
@@ -8,18 +7,37 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Tìm patientId thật từ patient-service theo email
+  const findPatientId = async (email) => {
+    try {
+      const res = await patientApi.getAll();
+      const patients = Array.isArray(res.data) ? res.data : (res.data?.data || []);
+      const matched = patients.find(p => p.email === email);
+      return matched?.id || null;
+    } catch (e) {
+      console.warn('Could not find patientId:', e);
+      return null;
+    }
+  };
+
   const login = async (credentials) => {
     try {
       const response = await authApi.login(credentials);
       const { accessToken, refreshToken, userId, email, role, fullName } = response.data;
-      
+
       localStorage.setItem('token', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
-      
-      const userData = { userId, email, role, fullName };
+
+      // Với USER role, tìm patientId tương ứng
+      let patientId = null;
+      if (role !== 'ADMIN') {
+        patientId = await findPatientId(email);
+      }
+
+      const userData = { userId, email, role, fullName, patientId };
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
-      
+
       return { success: true };
     } catch (error) {
       console.error('Login failed:', error);
@@ -56,12 +74,17 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       const token = localStorage.getItem('token');
       const savedUser = localStorage.getItem('user');
-      
+
       if (token && savedUser) {
         try {
-          // Optional: Re-validate token with backend on refresh
-          // const validateResponse = await authApi.validate();
-          setUser(JSON.parse(savedUser));
+          const parsed = JSON.parse(savedUser);
+          // Nếu user cũ chưa có patientId thì tìm lại
+          if (!parsed.patientId && parsed.role !== 'ADMIN' && parsed.email) {
+            const patientId = await findPatientId(parsed.email);
+            parsed.patientId = patientId;
+            localStorage.setItem('user', JSON.stringify(parsed));
+          }
+          setUser(parsed);
         } catch (error) {
           logout();
         }
